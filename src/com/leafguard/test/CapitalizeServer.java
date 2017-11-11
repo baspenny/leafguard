@@ -34,7 +34,7 @@ public class CapitalizeServer {
         ServerSocket listener = new ServerSocket(9898);
         try {
             while (true) {
-                new Capitalizer(listener.accept(), clientNumber++).start();
+                new Capitalizer(listener.accept(), ++clientNumber).start();
             }
         } finally {
             listener.close();
@@ -53,7 +53,7 @@ public class CapitalizeServer {
         public Capitalizer(Socket socket, int clientNumber) {
             this.socket = socket;
             this.clientNumber = clientNumber;
-            log("New connection with client# " + clientNumber + " at " + socket);
+            log("New connection with client #" + clientNumber + " at " + socket);
         }
 
         /**
@@ -82,6 +82,7 @@ public class CapitalizeServer {
                     if (input == null || input.equals(".")) {
                         break;
                     }
+                    log("incomming message from client #"+clientNumber+": " + input);
                     out.println(input.toUpperCase());
                 }
             } catch (IOException e) {
