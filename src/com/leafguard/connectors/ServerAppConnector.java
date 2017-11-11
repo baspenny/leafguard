@@ -1,6 +1,6 @@
 package com.leafguard.connectors;
 
-public class ServerWebAppConnector implements ConnectorInterface {
+public class ServerAppConnector implements ConnectorInterface {
     @Override
     public String sendData() {
         return null;

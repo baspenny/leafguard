@@ -1,6 +1,8 @@
 package com.leafguard.connectors;
 
-public class WebAppServerConnector  implements ConnectorInterface
+import com.leafguard.connectors.ConnectorInterface;
+
+public class AppServerConnector implements ConnectorInterface
 {
     @Override
     public String sendData() {

@@ -18,10 +18,10 @@ public class DateServer {
      * Runs the server.
      */
     public static void main(String[] args) throws IOException {
-        ServerSocket listener = new ServerSocket(9090);
+        ServerSocket server = new ServerSocket(9090);
         try {
             while (true) {
-                Socket socket = listener.accept();
+                Socket socket = server.accept();
                 try {
                     PrintWriter out =
                             new PrintWriter(socket.getOutputStream(), true);
@@ -32,7 +32,7 @@ public class DateServer {
             }
         }
         finally {
-            listener.close();
+            server.close();
         }
     }
 }
