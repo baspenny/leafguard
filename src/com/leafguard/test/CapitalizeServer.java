@@ -1,4 +1,4 @@
-package edu.lmu.cs.networking;
+package com.leafguard.test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
