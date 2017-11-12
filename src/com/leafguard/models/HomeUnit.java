@@ -1,8 +1,9 @@
 package com.leafguard.models;
 
-public class HomeUnit
-{
+import java.util.ArrayList;
 
+public class HomeUnit {
+    private ArrayList<ArduinoController> arduinoControllers;
 
 
     public void sendMessage(String message) {
@@ -13,5 +14,11 @@ public class HomeUnit
         return null;
     }
 
+    public boolean addArduino(ArduinoController arduinoController) {
+        if( this.arduinoControllers.add(arduinoController)) {
+            return true;
+        }
+        return false;
+    }
 
  }

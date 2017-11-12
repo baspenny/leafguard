@@ -1,4 +1,6 @@
 package com.leafguard.models;
 
-public class Server {
+public class App
+{
+
 }

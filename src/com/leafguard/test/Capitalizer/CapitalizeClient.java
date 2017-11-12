@@ -1,4 +1,4 @@
-package com.leafguard.test;
+package com.leafguard.test.Capitalizer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
