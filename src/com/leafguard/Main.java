@@ -13,13 +13,10 @@ public class Main
         try {
             SerialConnector serialConnector = new SerialConnector();
             serialConnector.initialize();
-            System.out.println(serialConnector.getResponse());
-
-
             Scanner scanner = new Scanner(System.in);
+
             while(scanner.hasNext()) {
-                serialConnector.sendMessage(scanner.next());
-                System.out.println(serialConnector.getResponse());
+                System.out.println(serialConnector.sendMessage(scanner.next()));
             }
 
 

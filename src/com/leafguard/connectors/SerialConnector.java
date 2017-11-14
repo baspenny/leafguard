@@ -80,15 +80,16 @@ public class SerialConnector implements SerialPortEventListener {
             serialPort.addEventListener(this);
             serialPort.notifyOnDataAvailable(true);
 
+            Thread t=new Thread() {
+            public void run() {
+                //the following line will keep this models alive for 1000 seconds,
+                //waiting for events to occur and responding to them (printing incoming messages to console).
+                try {Thread.sleep(1000000);} catch (InterruptedException ie) {}
+            }
+        };
+        t.start();
 
-            System.out.println("Started");
-            Scanner sc = new Scanner(System.in);
-
-//            while (sc.hasNext()) {
-//                String message = sc.next();
-//                output.write(message.getBytes());
-//            }
-
+        System.out.println("Started");
 
 
         } catch (Exception e) {
@@ -96,14 +97,16 @@ public class SerialConnector implements SerialPortEventListener {
         }
     }
 
-    public void sendMessage(String message) throws IOException
+    public String sendMessage(String message) throws Exception
     {
         output.write(message.getBytes());
-    }
-
-    public String getResponse() {
+        Thread.sleep(300);
         return this.response;
     }
+
+//    public String getMessage() {
+//        return this.response;
+//    }
 
     /**
      * This should be called when you stop using the port.
