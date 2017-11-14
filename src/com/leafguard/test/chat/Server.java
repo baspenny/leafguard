@@ -48,7 +48,8 @@ public class Server {
         try
         {
             // the socket used by the server
-            ServerSocket serverSocket = new ServerSocket(port);
+            ServerSocket serverSocket = new ServerSocket(5001);
+
 
             // infinite loop to wait for connections
             while(keepGoing)
