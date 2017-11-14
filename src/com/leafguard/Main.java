@@ -11,19 +11,16 @@ public class Main
 
     public static void main(String[] args) {
         try {
-
-
-
-            SerialConnector.main(null);
-
-
             SerialConnector serialConnector = new SerialConnector();
-//
-//
-//            Scanner sc = new Scanner(System.in);
-//            String i = sc.next();
-//            SerialConnector sconn = new SerialConnector();
-//            sconn.sendMessage(i);
+            serialConnector.initialize();
+            System.out.println(serialConnector.getResponse());
+
+
+            Scanner scanner = new Scanner(System.in);
+            while(scanner.hasNext()) {
+                serialConnector.sendMessage(scanner.next());
+                System.out.println(serialConnector.getResponse());
+            }
 
 
         } catch (Exception e) {

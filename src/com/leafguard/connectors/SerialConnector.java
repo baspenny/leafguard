@@ -35,6 +35,9 @@ public class SerialConnector implements SerialPortEventListener {
     /** Default bits per second for COM port. */
     private static final int DATA_RATE = 9600;
 
+    private String response;
+
+
     public void initialize() {
         // the next line is for Raspberry Pi and
         // gets us into the while loop and was suggested here was suggested http://www.raspberrypi.org/phpBB3/viewtopic.php?f=81&t=32186
@@ -81,17 +84,25 @@ public class SerialConnector implements SerialPortEventListener {
             System.out.println("Started");
             Scanner sc = new Scanner(System.in);
 
-            while (sc.hasNext()) {
-                String message = sc.next();
-                output.write(message.getBytes());
-            }
-
+//            while (sc.hasNext()) {
+//                String message = sc.next();
+//                output.write(message.getBytes());
+//            }
 
 
 
         } catch (Exception e) {
             System.err.println(e.toString());
         }
+    }
+
+    public void sendMessage(String message) throws IOException
+    {
+        output.write(message.getBytes());
+    }
+
+    public String getResponse() {
+        return this.response;
     }
 
     /**
@@ -111,8 +122,7 @@ public class SerialConnector implements SerialPortEventListener {
     public synchronized void serialEvent(SerialPortEvent oEvent) {
         if (oEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
             try {
-                String inputLine=input.readLine();
-                System.out.println(inputLine);
+                this.response = input.readLine();
             } catch (Exception e) {
                 System.err.println(e.toString());
             }
@@ -120,18 +130,19 @@ public class SerialConnector implements SerialPortEventListener {
         // Ignore all the other eventTypes, but you should consider the other ones.
     }
 
-    public static void main(String[] args) throws Exception {
-        SerialConnector main = new SerialConnector();
-        main.initialize();
-        Thread t=new Thread() {
-            public void run() {
-                //the following line will keep this models alive for 1000 seconds,
-                //waiting for events to occur and responding to them (printing incoming messages to console).
-                try {Thread.sleep(1000000);} catch (InterruptedException ie) {}
-            }
-        };
-        t.start();
 
-        System.out.println("Started");
-    }
+//    public static void main(String[] args) throws Exception {
+//        SerialConnector main = new SerialConnector();
+//        main.initialize();
+////        Thread t=new Thread() {
+////            public void run() {
+////                //the following line will keep this models alive for 1000 seconds,
+////                //waiting for events to occur and responding to them (printing incoming messages to console).
+////                try {Thread.sleep(1000000);} catch (InterruptedException ie) {}
+////            }
+////        };
+////        t.start();
+//
+//        System.out.println("Started");
+//    }
 }
