@@ -48,7 +48,7 @@ void loop() {
     {
       String ret = "moisture=";
       ret.concat(moisturePercentage);
-      ret.concat("pumpstate=");
+      ret.concat("&pumpstate=");
       ret.concat(digitalRead(relaisSwitch));
       
       Serial.println(ret);
