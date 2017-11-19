@@ -5,47 +5,39 @@ import com.leafguard.models.Arduino;
 
 import java.util.Scanner;
 
-
 public class Main
 {
+    Arduino arduino;
+    SerialConnector ser;
 
-    private int moisture;
-    private int pumpstate;
-
-    public void run() {
+    public void run()
+    {
         try {
-            SerialConnector serialConnector = new SerialConnector();
-            serialConnector.initialize();
             Scanner scanner = new Scanner(System.in);
+            this.arduino = new Arduino(new SerialConnector());
+            Thread.sleep(400);
 
             while(scanner.hasNext()) {
-                String result = serialConnector.sendMessage(scanner.next());
-
-                String[] explodedresults = result.split("&");
-
-                for(String ff : explodedresults) {
-                    String[] kv = ff.split("=");
-
-                    if(kv[0].equals("moisture")) {
-                        moisture = Integer.parseInt(kv[1]);
-                    }
-                    if(kv[0].equals("pumpstate")) {
-                        pumpstate = Integer.parseInt(kv[1]);
-                    }
-
+                String input = scanner.next();
+                if(input.equals("aan")) {
+                    System.out.println(arduino.controlPump(1));
                 }
-
-                System.out.println("moisture is " + this.moisture + " and the pump is " + (this.pumpstate == 1 ? "on" : "off"));
-
+                if(input.equals("uit")) {
+                    System.out.println(arduino.controlPump(0));
+                }
+                if(input.equals("vocht")) {
+                    System.out.println(this.arduino.getMoisturePercentage());
+                }
+                if(input.equals("stop")) {
+                    arduino.closeSerialConnection();
+                    System.exit(0);
+                }
             }
-
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-
-
 
 
     public static void main(String[] args) {

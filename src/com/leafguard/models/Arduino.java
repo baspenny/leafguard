@@ -1,140 +1,139 @@
 package com.leafguard.models;
 
-import java.awt.Dimension;
-import java.io.PrintWriter;
-import java.util.Scanner;
+import com.leafguard.connectors.SerialConnector;
 
-import com.fazecast.jSerialComm.*;
+import java.io.IOException;
+
+public class Arduino
+{
+    private int id;
+    private int pumpState;
+    private int moisturePercentage;
+
+    private SerialConnector serialConnector;
+
+    /**
+     * Constructor
+     * Set the serialconnector and load the object with data from Arduino
+     * @param serialConnector
+     */
+    public Arduino(SerialConnector serialConnector)
+    {
+        this.serialConnector = serialConnector;
+        serialConnector.initialize();
+    }
+
+    /**
+     * @return id from the Arduino instance
+     */
+    public int getId()
+    {
+        return this.id;
+    }
+
+    /**
+     * Load fresh data from Arduino and
+     * @return the current state of the pump
+     */
+    private int getPumpState()
+    {
+        this.getDataFromSerial();
+        return this.pumpState;
+    }
+
+    /**
+     * Load fresh data from Arduino and
+     * @return the current moisturelevel
+     */
+    public int getMoisturePercentage()
+    {
+        this.getDataFromSerial();
+        return this.moisturePercentage;
+    }
+
+    /**
+     * This activates or deactivates the pump
+     * 1 = active
+     * 0 = inactive
+     */
+    public String controlPump(int state) {
+        // Set a fresh value in the pumpState property
+        this.getPumpState();
+
+        if(this.pumpState == 1 && state == 1) {
+            //togglePump(1);
+            return "Pomp staat al aan!";
+
+        } else if (this.pumpState == 0 && state == 1) {
+            return togglePump(1);
+
+        } else if (this.pumpState == 1 && state == 0) {
+
+            return togglePump(0);
+        }
+        return "Pomp staat al uit!";
+    }
 
 
-public class Arduino {
-	private SerialPort comPort;
-	private String portDescription;
-	private int baud_rate;
-	
-	public Arduino() {
-		//empty constructor if port undecided
-	}
-	public Arduino(String portDescription) {
-		//make sure to set baud rate after
-		this.portDescription = portDescription;
-		comPort = SerialPort.getCommPort(this.portDescription);
-	}
-	
-	public Arduino(String portDescription, int baud_rate) {
-		//preferred constructor
-		this.portDescription = portDescription;
-		comPort = SerialPort.getCommPort(this.portDescription);
-		this.baud_rate = baud_rate;
-		comPort.setBaudRate(this.baud_rate);
-	}
-	
-	
-	
-	public boolean openConnection(){
-		if(comPort.openPort()){
-			try {Thread.sleep(100);} catch(Exception e){}
-			return true;
-		}
-		else {
-			AlertBox alert = new AlertBox(new Dimension(400,100),"Error Connecting", "Try Another port");
-			alert.display();
-			return false;
-		}
-	}
-	
-	public void closeConnection() {
-		comPort.closePort();
-	}
-	
-	public void setPortDescription(String portDescription){
-		this.portDescription = portDescription;
-		comPort = SerialPort.getCommPort(this.portDescription);
-	}
-	public void setBaudRate(int baud_rate){
-		this.baud_rate = baud_rate;
-		comPort.setBaudRate(this.baud_rate);
-	}
-	
-	public String getPortDescription(){
-		return portDescription;
-	}
-	
-	public SerialPort getSerialPort(){
-		return comPort;
-	}
-	
-	
-	public String serialRead(){
-		//will be an infinite loop if incoming data is not bound
-		comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
-		String out="";
-		Scanner in = new Scanner(comPort.getInputStream());
-		try
-		{
-		   while(in.hasNext())
-		      out += (in.next()+"\n");
-		   	in.close();
-		} catch (Exception e) { e.printStackTrace(); }
-		return out;
-	}
-	
-	public String serialRead(int limit){
-		//in case of unlimited incoming data, set a limit for number of readings
-		comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
-		String out="";
-		int count=0;
-		Scanner in = new Scanner(comPort.getInputStream());
-		try
-		{
-		   while(in.hasNext()&&count<=limit){
-		      out += (in.next()+"\n");
-		      count++;
-		   }
-		   	in.close();
-		} catch (Exception e) { e.printStackTrace(); }
-		return out;
-	}
-	
-	public void serialWrite(String s){
-		//writes the entire string at once.
-		comPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
-		try{Thread.sleep(5);} catch(Exception e){}
-		PrintWriter pout = new PrintWriter(comPort.getOutputStream());
-		pout.print(s);
-		pout.flush();
-		
-	}
-	public void serialWrite(String s,int noOfChars, int delay){
-		//writes the entire string at once.
-		comPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
-		try{Thread.sleep(5);} catch(Exception e){}
-		PrintWriter pout = new PrintWriter(comPort.getOutputStream());
-		for(int i=0;i<s.length();i+=noOfChars){
-			pout.write(s.substring(i,i+noOfChars));
-			pout.flush();
-			System.out.println(s.substring(i,i+noOfChars));
-			try{Thread.sleep(delay);}catch(Exception e){}
-		}
-		pout.write(noOfChars);
-		pout.flush();
-		
-	}
-	
-	public void serialWrite(char c){
-		//writes the entire string at once.
-		comPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
-		try{Thread.sleep(5);} catch(Exception e){}
-		PrintWriter pout = new PrintWriter(comPort.getOutputStream());pout.write(c);
-		pout.flush();
-	}
-	
-	public void serialWrite(char c, int delay){
-		//writes the entire string at once.
-		comPort.setComPortTimeouts(SerialPort.TIMEOUT_SCANNER, 0, 0);
-		try{Thread.sleep(5);} catch(Exception e){}
-		PrintWriter pout = new PrintWriter(comPort.getOutputStream());pout.write(c);
-		pout.flush();
-		try{Thread.sleep(delay);}catch(Exception e){}
-	}
+    /**
+     * The actual pump switch action on the Arduino
+     * @param state
+     */
+    private String togglePump(int state)
+    {
+        if(state == 1) {
+            this.serialConnector.sendData("pumpon");
+            return "ok";
+        }
+        this.serialConnector.sendData("pumpoff");
+        return "ok";
+    }
+
+    /**
+     * Get the full data string from Arduino
+     * and pass it to parseReturnValue()
+     */
+    private void getDataFromSerial()
+    {
+        this.serialConnector.sendData("data");
+        this.sleep();
+        this.parseReturnValue(this.serialConnector.receiveData());
+    }
+
+    /**
+     * Parse the returned string from Arduino
+     * e.g. : moisture={value}&pumpstate={value}
+     */
+    private void parseReturnValue(String returnstring)
+    {
+        String[] explodedReturnstring = returnstring.split("&");
+
+        for(String returnstringPart : explodedReturnstring) {
+            String[] kv = returnstringPart.split("=");
+
+            if(kv[0].equals("moisture")) {
+                moisturePercentage = Integer.parseInt(kv[1]);
+            }
+            if(kv[0].equals("pumpstate")) {
+                pumpState = Integer.parseInt(kv[1]);
+            }
+        }
+    }
+
+    /**
+     * Close the current serial connection
+     */
+    public void closeSerialConnection()
+    {
+        this.serialConnector.close();
+    }
+
+    public void sleep() {
+        try{
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }
+

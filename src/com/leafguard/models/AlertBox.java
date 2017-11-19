@@ -3,9 +3,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-public class AlertBox {
-	JFrame alertWindow;
-	public AlertBox(Dimension obj, String title, String message) {
+
+public class AlertBox
+{
+    JFrame alertWindow;
+
+    public AlertBox(Dimension obj, String title, String message) {
+
 		alertWindow = new JFrame();
 		alertWindow.setTitle(title);
 		alertWindow.setSize(obj);

@@ -16,9 +16,8 @@ public class SerialConnector implements SerialPortEventListener {
     SerialPort serialPort;
     /** The port we're normally going to use. */
     private static final String PORT_NAMES[] = {
-            "/dev/cu.usbmodem1D111", // Mac Pro Sebas
-            "/dev/ttyACM0", // Raspberry Pi
-            "/dev/ttyUSB0", // Linux
+            "/dev/cu.usbmodem1D121", // Mac Pro Sebas
+            "/dev/cu.usbmodem1D111", // Macbook Pro Sebas
             // @todo : Port toevoegen van Huub == dat com3????
             "COM3", // Windows
     };
@@ -39,14 +38,11 @@ public class SerialConnector implements SerialPortEventListener {
 
 
     public void initialize() {
-        // the next line is for Raspberry Pi and
-        // gets us into the while loop and was suggested here was suggested http://www.raspberrypi.org/phpBB3/viewtopic.php?f=81&t=32186
-        // System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyACM0");
 
         CommPortIdentifier portId = null;
         Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
 
-        //First, Find an instance of serial port as set in PORT_NAMES.
+        // First, Find an instance of serial port as set in PORT_NAMES.
         while (portEnum.hasMoreElements()) {
             CommPortIdentifier currPortId = (CommPortIdentifier) portEnum.nextElement();
             for (String portName : PORT_NAMES) {
@@ -97,16 +93,23 @@ public class SerialConnector implements SerialPortEventListener {
         }
     }
 
-    public String sendMessage(String message) throws Exception
+    public void sendData(String message)
     {
-        output.write(message.getBytes());
-        Thread.sleep(300);
-        return this.response;
+        try {
+            output.write(message.getBytes());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-//    public String getMessage() {
-//        return this.response;
-//    }
+    public String receiveData() {
+        return this.response;
+    }
 
     /**
      * This should be called when you stop using the port.

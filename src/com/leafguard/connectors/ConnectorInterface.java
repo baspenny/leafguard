@@ -2,12 +2,12 @@ package com.leafguard.connectors;
 
 public interface ConnectorInterface {
 
-    public String sendData();
+    public void sendData(String data);
 
     public String receiveData();
 
-    public boolean open();
+    public boolean openConnection();
 
-    public boolean close();
+    public boolean closeConnection();
 
 }

@@ -3,8 +3,7 @@ package com.leafguard.connectors;
 public class ServerHomeUnitConnector implements ConnectorInterface
 {
     @Override
-    public String sendData() {
-        return null;
+    public void sendData(String data) {
     }
 
     @Override
@@ -13,12 +12,12 @@ public class ServerHomeUnitConnector implements ConnectorInterface
     }
 
     @Override
-    public boolean open() {
+    public boolean openConnection() {
         return false;
     }
 
     @Override
-    public boolean close() {
+    public boolean closeConnection() {
         return false;
     }
 }

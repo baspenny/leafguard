@@ -3,7 +3,7 @@ package com.leafguard.models;
 import java.util.ArrayList;
 
 public class HomeUnit {
-    private ArrayList<ArduinoController> arduinoControllers;
+    private ArrayList<Arduino> arduinoControllers;
 
 
     public void sendMessage(String message) {
@@ -14,7 +14,7 @@ public class HomeUnit {
         return null;
     }
 
-    public boolean addArduino(ArduinoController arduinoController) {
+    public boolean addArduino(Arduino arduinoController) {
         if( this.arduinoControllers.add(arduinoController)) {
             return true;
         }
