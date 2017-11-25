@@ -271,7 +271,7 @@ public class Server {
         }
 
         // try to close everything
-        private void close() {
+        private void  close() {
             // try to close the connection
             try {
                 if(sOutput != null) sOutput.close();

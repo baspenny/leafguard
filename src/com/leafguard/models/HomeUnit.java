@@ -1,5 +1,7 @@
 package com.leafguard.models;
 
+import com.leafguard.leafguard.Arduino;
+
 import java.util.ArrayList;
 
 public class HomeUnit {

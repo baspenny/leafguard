@@ -1,4 +1,4 @@
-package com.leafguard.models;
+package com.leafguard.leafguard;
 
 import com.leafguard.connectors.SerialConnector;
 
