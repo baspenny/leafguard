@@ -1,0 +1,22 @@
+#green {
+    -fx-background-color: #57a525;
+    /*-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );*/
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-text-fill: #000000;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.5), 10, 1.0, 100, 100);
+    
+}
+#red {
+    -fx-background-color: #a51c14;
+    /*-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );*/
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-text-fill: #000000;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.5), 10, 1.0, 100, 100);
+
+}

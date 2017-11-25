@@ -1,4 +1,4 @@
-package com.leafguard.homeserver;
+package com.leafguard.client;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -19,6 +19,7 @@ public class Client
     private void run() {
         while(true) {
             try {
+                this.login();
                 Thread.sleep(3000);
                 this.disconnectFromServer();
 
@@ -29,6 +30,19 @@ public class Client
 
         }
     }
+
+    public void login() {
+        String[] args = null;
+
+        ClientGui.main(args);
+    }
+
+
+    private void createGui() {
+
+    }
+
+
 
     private void createStreams() {
 
