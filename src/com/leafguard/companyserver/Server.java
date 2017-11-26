@@ -1,6 +1,6 @@
 package com.leafguard.companyserver;
 
-import com.leafguard.homeserver.ClientThread;
+import com.leafguard.companyserver.ClientThread;
 
 import javax.sound.midi.Soundbank;
 import java.io.IOException;
@@ -14,8 +14,6 @@ import java.util.Map;
 public class Server
 {
     private ServerSocket serverSocket;
-    private ArrayList<ClientThread> clientThreads = new ArrayList<ClientThread>();
-    private HashMap<String, ClientThread> clients = new HashMap<String, ClientThread>();
 
     public Server()
     {
@@ -39,38 +37,26 @@ public class Server
     private void startThread(Socket socket)
     {
         ClientThread ct = new ClientThread(socket);
-        //this.clientThreads.add(ct);
-        this.clients.put(ct.getUniqueID(), ct);
         ct.start();
-
-        this.log("ClientThread with UUID "+ct.getUniqueID()+ " is started");
-        this.log("The current number of clients is: "+this.clients.size());
-
     }
-
-    private synchronized void stopThread(ClientThread clientThread) {
-        // Loop trough the clientThreads and match it to the clientThread in the param
-        // Then invoke the stop method on it
-        for (String uuid: this.clients.keySet()) {
-
-            if(clientThread.getUniqueID().equals(uuid)) {
-                ClientThread client = this.clients.get(uuid);
-                client.stopThread();
-            }
-        }
-    }
-
 
     private void listenToIncomingConnection()
     {
         this.log("Listening for client connections...");
-        // @todo: call a method that loops trough the array and removes the disconnected clients
+
         while(true) {
             try {
 
                 Socket socket = this.serverSocket.accept();
                 this.startThread(socket);
                 this.log("Resuming listening for new connections...");
+
+                ThreadGroup currentGroup = Thread.currentThread().getThreadGroup();
+                int noThreads = currentGroup.activeCount();
+                Thread[] lstThreads = new Thread[noThreads];
+                currentGroup.enumerate(lstThreads);
+                for (int i = 0; i < noThreads; i++) System.out.println("Thread No:" + i + " = " + lstThreads[i].getName());
+
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 System.exit(1);
@@ -81,8 +67,6 @@ public class Server
     public static void main(String[] args)
     {
         Server server = new Server();
-
-
     }
 
     private void log(String message) {

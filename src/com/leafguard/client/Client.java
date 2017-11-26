@@ -1,11 +1,20 @@
 package com.leafguard.client;
 
+import sun.awt.windows.ThemeReader;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Client
 {
     private Socket socket;
+    private BufferedReader in;
+    private PrintWriter out;
+    private Boolean run = true;
+
 
     public Client() {
         try {
@@ -13,17 +22,26 @@ public class Client
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        this.run();
+        try {
+            in = new BufferedReader(
+                    new InputStreamReader(socket.getInputStream()));
+            out = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    private void run() {
-        while(true) {
+    public void run() {
+        while(run) {
             try {
-                this.login();
-                Thread.sleep(3000);
-                this.disconnectFromServer();
+                out.println("Hello from client....");
+//                /Thread.sleep(10000);
+                String response = in.readLine();
+                System.out.println(response);
+                //this.disconnectFromServer();
+                run = false;
 
-            } catch (InterruptedException e) {
+            } catch (Exception e) {
                 break;
             }
 
@@ -31,33 +49,12 @@ public class Client
         }
     }
 
-    public void login() {
-        String[] args = null;
-
-        ClientGui.main(args);
-    }
-
-
-    private void createGui() {
-
-    }
-
-
-
-    private void createStreams() {
-
-    }
-
-
     // Send message to server that we are going to disconnect.
     private void disconnectFromServer() {
-        System.exit(0);
-    }
-
-
-
-    public static void main(String[] args) {
-        Client client = new Client();
+        // Clean up streams
+        this.run = false;
+        out.println("DISCONNECT");
+        //System.exit(0);
     }
 
 }
