@@ -1,9 +1,6 @@
 package com.leafguard.companyserver;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DataStore
 {
@@ -28,16 +25,17 @@ public class DataStore
         }
     }
 
-    public void createTable() {
-        String sql = "CREATE TABEL IF NOT EXISTS plants (\n"
-                + " id integer PRIMARY KEY, \n"
-                + " plant_id integer NOT NULL, \n"
-                + " moisture integer NOT NULL);";
-
+    public String getData() throws Exception {
+        Statement statement = connection.createStatement();
+        ResultSet res = statement.executeQuery("SELECT * FROM logs");
+        String ret = "";
+        while (res.next()) {
+            ret += " "+res.getString("name");
+        }
+        return ret;
     }
 
-
-    public String getData() throws Exception{
-        return "this is response from " + this.getClass() + " " + connection.getMetaData();
+    public void closeConnection() throws Exception{
+        this.connection.close();
     }
- }
+  }

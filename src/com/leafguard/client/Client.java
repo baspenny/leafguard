@@ -37,6 +37,9 @@ public class Client
                 out.println("Hello from client....");
 //                /Thread.sleep(10000);
                 String response = in.readLine();
+
+
+                // parse string hier
                 System.out.println(response);
                 //this.disconnectFromServer();
                 run = false;

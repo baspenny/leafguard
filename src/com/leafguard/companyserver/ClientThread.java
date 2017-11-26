@@ -31,6 +31,7 @@ public class ClientThread extends Thread
 
                 DataStore db = new DataStore();
                 String res = db.getData();
+                db.closeConnection();
 
                 // Read incoming stream
                 String clientCommand = in.readLine();

@@ -51,11 +51,6 @@ public class Server
                 this.startThread(socket);
                 this.log("Resuming listening for new connections...");
 
-                ThreadGroup currentGroup = Thread.currentThread().getThreadGroup();
-                int noThreads = currentGroup.activeCount();
-                Thread[] lstThreads = new Thread[noThreads];
-                currentGroup.enumerate(lstThreads);
-                for (int i = 0; i < noThreads; i++) System.out.println("Thread No:" + i + " = " + lstThreads[i].getName());
 
             } catch (Exception e) {
                 System.out.println(e.getMessage());
