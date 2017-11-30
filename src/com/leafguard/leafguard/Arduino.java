@@ -1,10 +1,6 @@
 package com.leafguard.leafguard;
 
-import com.leafguard.connectors.SerialConnector;
-
-import java.io.IOException;
-
-public class Arduino
+public class Arduino implements ArduinoInterface
 {
     private int id;
     private int pumpState;
@@ -134,6 +130,26 @@ public class Arduino
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @Override
+    public void sendData(String data) {
+
+    }
+
+    @Override
+    public String receiveData() {
+        return null;
+    }
+
+    @Override
+    public boolean openConnection() {
+        return false;
+    }
+
+    @Override
+    public boolean closeConnection() {
+        return false;
     }
 }
 

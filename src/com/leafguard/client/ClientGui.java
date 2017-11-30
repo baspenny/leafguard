@@ -2,33 +2,18 @@ package com.leafguard.client;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 
 
 public class ClientGui extends Application
@@ -37,6 +22,7 @@ public class ClientGui extends Application
     Stage stage;
     String response;
     Boolean run = true;
+    int moisture = 0;
 
     @Override
     public void start(Stage stage)
@@ -64,7 +50,7 @@ public class ClientGui extends Application
         GridPane pane  = new GridPane();
         pane.setStyle("-fx-background-color: #e5e5e5;");
         HBox logocontainer = new HBox();
-        Image headerFile = new Image("com/leafguard/client/header.png");
+        Image headerFile = new Image("com/leafguard/client/img/header.png");
         ImageView header = new ImageView(headerFile);
         header.setPreserveRatio(true);
         header.setFitWidth(405);
@@ -86,19 +72,19 @@ public class ClientGui extends Application
         graphContainer.setPadding(new Insets(50,50,50,50));
 
         Group group = new Group();
-        int moistureValue = 65;
+        int moistureValue = this.moisture;
         Color arcValueColor = new Color(0,0,0,1);
         String imageString = "";
 
         if(moistureValue < 20 && moistureValue >= 0) {
             arcValueColor = arcValueColor.web("#ff3300");
-            imageString = "com/leafguard/client/sad.png";
+            imageString = "com/leafguard/client/img/sad.png";
         } else if (moistureValue < 55 && moistureValue >= 20) {
             arcValueColor = arcValueColor.web("#ffdb4d");
-            imageString = "com/leafguard/client/neutral.png";
+            imageString = "com/leafguard/client/img/neutral.png";
         } else {
             arcValueColor = arcValueColor.web("#37df8b");
-            imageString = "com/leafguard/client/happy.png";
+            imageString = "com/leafguard/client/img/happy.png";
         }
 
         // Calculate the length and startangle of the arc
@@ -119,7 +105,7 @@ public class ClientGui extends Application
         arcFull.setStrokeType(StrokeType.CENTERED);
         arcFull.setFill(null);
 
-        Image plantFile = new Image("com/leafguard/client/plant.png");
+        Image plantFile = new Image("com/leafguard/client/img/plant.png");
         ImageView plant = new ImageView(plantFile);
         plant.setPreserveRatio(true);
         plant.setFitWidth(130);
@@ -155,7 +141,7 @@ public class ClientGui extends Application
         buttonText.setX(10);
         buttonText.setY(390);
 
-        Image dropsFile = new Image("com/leafguard/client/drops.png");
+        Image dropsFile = new Image("com/leafguard/client/img/drops.png");
         ImageView drops = new ImageView(dropsFile);
         drops.setPreserveRatio(true);
         drops.setFitWidth(50);
@@ -171,12 +157,14 @@ public class ClientGui extends Application
 
         waterButton.setOnMousePressed(event -> {
             System.out.println("Water???");
+            this.moisture = this.moisture +10;
+            this.showMainWindow();
         });
 
 
 
         Scene scene = new Scene(pane, 405, 712);
-        scene.getStylesheets().add("com/leafguard/client/style.css");
+        scene.getStylesheets().add("com/leafguard/client/css/style.css");
 
 
         stage.setScene(scene);

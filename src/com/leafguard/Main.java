@@ -1,6 +1,6 @@
 package com.leafguard;
 
-import com.leafguard.connectors.SerialConnector;
+import com.leafguard.leafguard.SerialConnector;
 import com.leafguard.leafguard.Arduino;
 
 import java.util.Scanner;

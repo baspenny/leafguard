@@ -1,4 +1,4 @@
-package com.leafguard.test.chat;
+package com.leafguard.examples.chat;
 
 import javax.swing.*;
 import java.awt.*;
@@ -164,7 +164,7 @@ public class ClientGUI extends JFrame implements ActionListener {
 
             // try creating a new Client with GUI
             client = new Client(server, port, username, this);
-            // test if we can start the Client
+            // examples if we can start the Client
             if(!client.start())
                 return;
             tf.setText("");

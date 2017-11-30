@@ -29,9 +29,9 @@ public class ClientThread extends Thread
 
             while (keepRunning) {
 
-                DataStore db = new DataStore();
-                String res = db.getData();
-                db.closeConnection();
+                //DataStore db = new DataStore();
+                String res = "Hi";//db.getData();
+                //db.closeConnection();
 
                 // Read incoming stream
                 String clientCommand = in.readLine();

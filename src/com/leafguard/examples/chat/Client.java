@@ -1,4 +1,4 @@
-package com.leafguard.test.chat;
+package com.leafguard.examples.chat;
 
 import java.net.*;
 import java.io.*;
@@ -186,7 +186,7 @@ public class Client  {
         }
         // create the Client object
         Client client = new Client(serverAddress, portNumber, userName);
-        // test if we can start the connection to the Server
+        // examples if we can start the connection to the Server
         // if it failed nothing we can do
         if(!client.start())
             return;

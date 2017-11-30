@@ -1,4 +1,4 @@
-package com.leafguard.connectors;
+package com.leafguard.leafguard;
 
 import java.io.*;
 
@@ -17,7 +17,7 @@ public class SerialConnector implements SerialPortEventListener {
     /** The port we're normally going to use. */
     private static final String PORT_NAMES[] = {
             "/dev/cu.usbmodem1D121", // Mac Pro Sebas
-            "/dev/cu.usbmodem1D111", // Macbook Pro Sebas
+            "/dev/cu.usbmodem1411", // Macbook Pro Sebas
             // @todo : Port toevoegen van Huub == dat com3????
             "COM3", // Windows
     };

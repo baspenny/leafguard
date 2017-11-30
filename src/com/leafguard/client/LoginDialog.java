@@ -14,9 +14,6 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.util.ArrayList;
-
 public class LoginDialog
 {
     String username;
@@ -43,7 +40,7 @@ public class LoginDialog
         // Logo
         HBox logoContainer = new HBox();
         logoContainer.setPadding(new Insets(0,0,20,0));
-        Image logoFile = new Image("com/leafguard/client/logo-small.png");
+        Image logoFile = new Image("com/leafguard/client/img/logo-small.png");
         ImageView logo = new ImageView(logoFile);
         logo.setPreserveRatio(true);
         logo.setFitWidth(100);
@@ -84,7 +81,7 @@ public class LoginDialog
         });
         // Add grid to the scene, scene to the stage and show the stage
         Scene scene = new Scene(grid, 340, 310);
-        scene.getStylesheets().add("com/leafguard/client/style.css");
+        scene.getStylesheets().add("com/leafguard/client/css/style.css");
         submit.setId("green");
         this.stage.setScene(scene);
         this.stage.showAndWait();

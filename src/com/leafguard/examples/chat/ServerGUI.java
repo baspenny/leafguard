@@ -1,4 +1,4 @@
-package com.leafguard.test.chat;
+package com.leafguard.examples.chat;
 
 import javax.swing.*;
 import java.awt.*;

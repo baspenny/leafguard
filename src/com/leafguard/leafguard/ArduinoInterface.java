@@ -1,6 +1,6 @@
-package com.leafguard.connectors;
+package com.leafguard.leafguard;
 
-public interface ConnectorInterface {
+public interface ArduinoInterface {
 
     public void sendData(String data);
 

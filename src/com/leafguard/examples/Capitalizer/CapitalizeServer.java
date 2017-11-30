@@ -1,4 +1,4 @@
-package com.leafguard.test.Capitalizer;
+package com.leafguard.examples.Capitalizer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
