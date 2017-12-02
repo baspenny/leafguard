@@ -9,8 +9,7 @@ import gnu.io.SerialPortEventListener;
 
 import java.util.Enumeration;
 
-
-public class SerialConnector implements SerialPortEventListener {
+public class SerialConnector implements SerialPortEventListener, SerialConnectorInterface {
     SerialPort serialPort;
     /** The port we're normally going to use. */
     private static final String PORT_NAMES[] = {
