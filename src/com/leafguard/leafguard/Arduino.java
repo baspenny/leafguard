@@ -57,7 +57,6 @@ public class Arduino implements ArduinoInterface
         this.getPumpState();
 
         if(this.pumpState == 1 && state == 1) {
-            //togglePump(1);
             return "Pomp staat al aan!";
 
         } else if (this.pumpState == 0 && state == 1) {

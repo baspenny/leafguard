@@ -2,14 +2,12 @@ package com.leafguard.leafguard;
 
 import java.io.*;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 
 import java.util.Enumeration;
-import java.util.Scanner;
 
 
 public class SerialConnector implements SerialPortEventListener {
@@ -18,7 +16,6 @@ public class SerialConnector implements SerialPortEventListener {
     private static final String PORT_NAMES[] = {
             "/dev/cu.usbmodem1D121", // Mac Pro Sebas
             "/dev/cu.usbmodem1411", // Macbook Pro Sebas
-            // @todo : Port toevoegen van Huub == dat com3????
             "COM3", // Windows
     };
     /**
