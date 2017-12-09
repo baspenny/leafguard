@@ -75,9 +75,9 @@ public class LoginDialog
             System.out.println("Submit is clicked");
             username = usernameTextField.getText();
             password = passwordField.getText();
-
-            parent.request(username, password);
-            System.out.println(parent.response());
+            submit.setId("red");
+            parent.sendRequest(username, password);
+            System.out.println(parent.getResponse());
         });
         // Add grid to the scene, scene to the stage and show the stage
         Scene scene = new Scene(grid, 340, 310);

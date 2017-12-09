@@ -15,14 +15,14 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-
 public class ClientGui extends Application
 {
-    LoginDialog dialog;
-    Stage stage;
-    String response;
-    Boolean run = true;
-    int moisture = 0;
+    private LoginDialog dialog;
+    private Client client;
+    private Stage stage;
+    private String response;
+    protected Boolean run = true;
+    private int moisture = 7;
 
     @Override
     public void start(Stage stage)
@@ -72,7 +72,7 @@ public class ClientGui extends Application
         graphContainer.setPadding(new Insets(50,50,50,50));
 
         Group group = new Group();
-        int moistureValue = this.moisture;
+        int moistureValue = getMoisture();
         Color arcValueColor = new Color(0,0,0,1);
         String imageString = "";
 
@@ -148,8 +148,6 @@ public class ClientGui extends Application
         drops.setY(298);
         drops.setX(22);
 
-
-
         group.getChildren().addAll(arcFull,arcValue, plant, happy,text, waterButton, buttonText, drops);
         graphContainer.getChildren().addAll(group);
         pane.add(graphContainer,0,2,3,1);
@@ -157,11 +155,7 @@ public class ClientGui extends Application
 
         waterButton.setOnMousePressed(event -> {
             System.out.println("Water???");
-            this.moisture = this.moisture +10;
-            this.showMainWindow();
         });
-
-
 
         Scene scene = new Scene(pane, 405, 712);
         scene.getStylesheets().add("com/leafguard/client/css/style.css");
@@ -174,13 +168,13 @@ public class ClientGui extends Application
     private void getDataFromServer() {
         Client client = new Client();
         client.run();
+        // @todo process the data received from the server into the GUI
+        // ....
+        // ....
 
-
-        // Hier ga ik bijvoorbeeld
     }
 
-
-    protected void request(String username, String password)
+    protected void sendRequest(String username, String password)
     {
         if(username.equals("leaf") && password.equals("guard")) {
             this.response = "Login succesfull";
@@ -190,12 +184,21 @@ public class ClientGui extends Application
         }
     }
 
-    protected String response() {
+    protected String getResponse() {
         return this.response;
     }
 
 
     public static void main(String[] args) {
+
         launch(args);
+    }
+
+    public int getMoisture() {
+        return moisture;
+    }
+
+    public void setMoisture(int moisture) {
+        this.moisture = moisture;
     }
 }

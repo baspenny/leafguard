@@ -9,10 +9,10 @@ public class ClientThread extends Thread
 {
     private Socket  socket;
     private String  uniqueID;
-    boolean keepRunning = true;
+    private boolean keepRunning = true;
 
     private BufferedReader  in;		// to read from the socket
-    private PrintWriter     out;		// to write on the socket
+    private PrintWriter     out;		// to write socketon the socket
 
     public ClientThread(Socket socket) {
         this.socket = socket;
