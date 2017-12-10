@@ -88,7 +88,7 @@ public class Arduino implements ArduinoInterface
      * Get the full data string from Arduino
      * and pass it to parseReturnValue()
      */
-    private void getDataFromSerial()
+    public void getDataFromSerial()
     {
         this.serialConnector.sendData("data");
         this.sleep();
@@ -131,22 +131,22 @@ public class Arduino implements ArduinoInterface
         }
     }
 
-    @Override
+
     public void sendData(String data) {
 
     }
 
-    @Override
+
     public String receiveData() {
         return null;
     }
 
-    @Override
+
     public boolean openConnection() {
         return false;
     }
 
-    @Override
+
     public boolean closeConnection() {
         return false;
     }
