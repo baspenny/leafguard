@@ -16,9 +16,9 @@ public class Client
     public Client()
     {
         try {
-            Socket socket           = new Socket("127.0.0.1", 3101);
-            this.in  = new DataInputStream(socket.getInputStream());
-            this.out = new DataOutputStream(socket.getOutputStream());
+            Socket socket   = new Socket("127.0.0.1", 3101);
+            this.in         = new DataInputStream(socket.getInputStream());
+            this.out        = new DataOutputStream(socket.getOutputStream());
 
             out.writeUTF(this.uuid.toString());
             out.flush();
@@ -52,6 +52,11 @@ public class Client
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public boolean checkCredentials(String username, String password) {
+
+        return true;
     }
 
 }

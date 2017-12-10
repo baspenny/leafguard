@@ -28,7 +28,7 @@ public class ClientGui extends Application
     public void start(Stage stage)
     {
         this.stage = stage;
-//        this.showLoginDialog();
+   //     this.showLoginDialog();
 
 
         if(run) {
@@ -209,12 +209,8 @@ public class ClientGui extends Application
 
     protected void sendRequest(String username, String password)
     {
-        if(username.equals("leaf") && password.equals("guard")) {
-            this.response = "Login succesfull";
-            dialog.stop();
-        } else {
-            this.response = "ERROR";
-        }
+        Client client = new Client();
+        client.checkCredentials(username, password);
     }
 
     protected String getResponse() {
