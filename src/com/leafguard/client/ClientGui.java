@@ -156,10 +156,38 @@ public class ClientGui extends Application
         waterButton.setOnMousePressed(event -> {
             Client client = new Client();
             // @todo process the data received from the server into the GUI
-            // ....
-            // ....
+
             String response = client.sendMessage("data");
             System.out.println(response);
+            client.sendMessage("stop");
+        });
+
+
+        item1.setOnMousePressed(event -> {
+            Client client = new Client();
+            // @todo process the data received from the server into the GUI
+
+            String response = client.sendMessage("Dit is knoppie een....");
+            System.out.println(response);
+            client.sendMessage("stop");
+        });
+
+        item2.setOnMousePressed(event -> {
+            Client client = new Client();
+            // @todo process the data received from the server into the GUI
+
+            String response = client.sendMessage("Dit is knop 2!!!");
+            System.out.println(response);
+            client.sendMessage("stop");
+        });
+
+        item3.setOnMousePressed(event -> {
+            Client client = new Client();
+            // @todo process the data received from the server into the GUI
+
+            String response = client.sendMessage("Hallo van knop drie!!!");
+            System.out.println(response);
+            client.sendMessage("stop");
         });
 
         Scene scene = new Scene(pane, 405, 712);
@@ -177,7 +205,6 @@ public class ClientGui extends Application
         // ....
         String response = client.sendMessage("data");
         System.out.println(response);
-
     }
 
     protected void sendRequest(String username, String password)

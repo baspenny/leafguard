@@ -32,18 +32,15 @@ public class CompanyServerWorker implements Runnable
                 this.clientMessage = in.readUTF();
 
 
-                out.writeUTF(this.clientMessage + " From thread" );
-                out.flush();
-
-//                if(this.clientMessage.equals("stop")) {
-//                    out.writeUTF("Stopping");
-//                    out.flush();
-//                    this.keepRunning = false;
-//                    break;
-//                } else {
-//                    out.writeUTF("Unknown command...");
-//                    out.flush();
-//                }
+                if(this.clientMessage.equals("stop")) {
+                    out.writeUTF("Stopping");
+                    out.flush();
+                    this.keepRunning = false;
+                    break;
+                } else {
+                    out.writeUTF(this.clientMessage + " From thread" );
+                    out.flush();
+                }
             }
             // Log of message
             System.out.println("Thread with UUID "+ this.getUniqueID() + " disconnecting and cleaning up!");
@@ -53,7 +50,7 @@ public class CompanyServerWorker implements Runnable
             socket.close();
 
         } catch (Exception e) {
-            System.out.println(e.getMessage() + this.getClass().getName());
+            //System.out.println(e.getMessage() + this.getClass().getName());
         }
 
     }

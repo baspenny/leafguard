@@ -19,7 +19,7 @@ public class CompanyServer
             this.listenToIncomingConnection();
 
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() );
             System.exit(1);
         }
      }
