@@ -1,5 +1,7 @@
 package com.leafguard.client;
 
+import com.leafguard.Log;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.UUID;
@@ -33,6 +35,7 @@ public class Client
         try {
             out.writeUTF(message);
             out.flush();
+            Log.info("Sending from uuid " + this.uuid);
             ret = in.readUTF();
 
         } catch (IOException e) {
@@ -40,4 +43,15 @@ public class Client
         }
         return ret;
     }
+
+    public void disconnect() {
+        try {
+            out.writeUTF("stop");
+            out.flush();
+            Log.info(this.uuid + " disconnecting");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }

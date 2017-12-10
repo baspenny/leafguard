@@ -153,13 +153,13 @@ public class ClientGui extends Application
         pane.add(graphContainer,0,2,3,1);
 
 
-        waterButton.setOnMousePressed(event -> {
+        waterButton.setOnMouseClicked(event -> {
             Client client = new Client();
             // @todo process the data received from the server into the GUI
 
             String response = client.sendMessage("data");
             System.out.println(response);
-            client.sendMessage("stop");
+            client.disconnect();
         });
 
 
@@ -169,7 +169,7 @@ public class ClientGui extends Application
 
             String response = client.sendMessage("Dit is knoppie een....");
             System.out.println(response);
-            client.sendMessage("stop");
+            client.disconnect();
         });
 
         item2.setOnMousePressed(event -> {
@@ -178,7 +178,7 @@ public class ClientGui extends Application
 
             String response = client.sendMessage("Dit is knop 2!!!");
             System.out.println(response);
-            client.sendMessage("stop");
+            client.disconnect();
         });
 
         item3.setOnMousePressed(event -> {
@@ -187,7 +187,7 @@ public class ClientGui extends Application
 
             String response = client.sendMessage("Hallo van knop drie!!!");
             System.out.println(response);
-            client.sendMessage("stop");
+            client.disconnect();
         });
 
         Scene scene = new Scene(pane, 405, 712);
