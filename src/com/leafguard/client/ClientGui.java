@@ -32,7 +32,7 @@ public class ClientGui extends Application
 
 
         if(run) {
-            this.getDataFromServer();
+            //this.getDataFromServer();
             this.showMainWindow();
         }
     }
@@ -154,7 +154,12 @@ public class ClientGui extends Application
 
 
         waterButton.setOnMousePressed(event -> {
-            System.out.println("Water???");
+            Client client = new Client();
+            // @todo process the data received from the server into the GUI
+            // ....
+            // ....
+            String response = client.sendMessage("data");
+            System.out.println(response);
         });
 
         Scene scene = new Scene(pane, 405, 712);
@@ -167,10 +172,11 @@ public class ClientGui extends Application
 
     private void getDataFromServer() {
         Client client = new Client();
-        client.run();
         // @todo process the data received from the server into the GUI
         // ....
         // ....
+        String response = client.sendMessage("data");
+        System.out.println(response);
 
     }
 
@@ -190,7 +196,6 @@ public class ClientGui extends Application
 
 
     public static void main(String[] args) {
-
         launch(args);
     }
 

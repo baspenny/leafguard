@@ -1,27 +1,21 @@
 package com.leafguard.companyserver;
 
-import com.leafguard.companyserver.ClientThread;
-
-import javax.sound.midi.Soundbank;
+import com.leafguard.Log;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
-public class Server
+public class CompanyServer
 {
     private ServerSocket serverSocket;
 
-    public Server()
+    public CompanyServer()
     {
         // Create new serversocket
         try {
 
             this.serverSocket = new ServerSocket(3101);
-            this.log("Serversocket on COMPANY-SERVER started");
+            Log.info("Serversocket on COMPANY-SERVER started");
             this.listenToIncomingConnection();
 
         } catch (IOException e) {
@@ -31,25 +25,26 @@ public class Server
      }
 
     /**
-     * Starts a new Thread and saves it to arraylist so we can keep track of them
+     * Starts a new Thread
      * @param socket
      */
     private void startThread(Socket socket)
     {
-        ClientThread ct = new ClientThread(socket);
-        ct.start();
+        CompanyServerWorker ct = new CompanyServerWorker(socket, this);
+        Thread t = new Thread(ct);
+        t.start();
     }
 
     private void listenToIncomingConnection()
     {
-        this.log("Listening for client connections...");
+        Log.info("Listening for client connections...");
 
         while(true) {
             try {
 
-                Socket socket = this.serverSocket.accept();
-                this.startThread(socket);
-                this.log("Resuming listening for new connections...");
+                //Socket socket = ;
+                this.startThread(this.serverSocket.accept());
+                Log.info("Resuming listening for new connections...");
 
 
             } catch (Exception e) {
@@ -61,10 +56,7 @@ public class Server
 
     public static void main(String[] args)
     {
-        Server server = new Server();
+        CompanyServer server = new CompanyServer();
     }
 
-    private void log(String message) {
-        System.out.println(new Date()+" - "+message);
-    }
 }

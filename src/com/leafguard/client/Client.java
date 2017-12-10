@@ -1,63 +1,43 @@
 package com.leafguard.client;
 
-import sun.awt.windows.ThemeReader;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
+import java.util.UUID;
 
 public class Client
 {
-    private Socket socket;
-    private BufferedReader in;
-    private PrintWriter out;
     private Boolean run = true;
+    private final UUID uuid = UUID.randomUUID();
+    private DataOutputStream out;
+    private DataInputStream in;
 
-
-    public Client() {
+    public Client()
+    {
         try {
-            this.socket = new Socket("127.0.0.1", 3101);
+            Socket socket           = new Socket("127.0.0.1", 3101);
+            this.in  = new DataInputStream(socket.getInputStream());
+            this.out = new DataOutputStream(socket.getOutputStream());
+
+            out.writeUTF(this.uuid.toString());
+            out.flush();
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public String sendMessage(String message)
+    {
+        String ret = "";
+
         try {
-            in = new BufferedReader(
-                    new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
+            out.writeUTF(message);
+            out.flush();
+            ret = in.readUTF();
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        return ret;
     }
-
-    public void run() {
-        while(run) {
-            try {
-                out.println("Hello from client....");
-//                /Thread.sleep(10000);
-                String response = in.readLine();
-
-
-                // parse string hier
-                System.out.println(response);
-                //this.disconnectFromServer();
-                run = false;
-
-            } catch (Exception e) {
-                break;
-            }
-
-
-        }
-    }
-
-    // Send message to server that we are going to disconnect.
-    private void disconnectFromServer() {
-        // Clean up streams
-        this.run = false;
-        out.println("DISCONNECT");
-        //System.exit(0);
-    }
-
 }
