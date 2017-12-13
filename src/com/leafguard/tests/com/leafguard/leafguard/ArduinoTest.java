@@ -7,28 +7,18 @@ import static org.junit.Assert.*;
 
 public class ArduinoTest {
 
-
-    private SerialConnector serialConnector;
-
-
-    public ArduinoTest(SerialConnector serialConnector) {
-        this.serialConnector = serialConnector;
-        serialConnector.initialize();
-    }
-
-
-    // deze test is nog niet af, nog testen met Arduino!
     @Test
     public void controlPump() throws Exception {
+
+        SerialConnector serialConnector = new SerialConnector();
+        serialConnector.initialize();
 
         int pumpState = 1; // input
         Arduino arduino = new Arduino(serialConnector);
 
-        String expect = "Pomp staat al aan!";
-        String expect2 = "Pomp aan!"; // verwachting, nog controleren
+        String expect = "ok";
         String actual = arduino.controlPump(pumpState);
-
-        assertEquals(expect, expect2, actual);
+        assertEquals(expect, actual);
     }
 
 
