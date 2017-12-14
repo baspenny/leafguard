@@ -74,7 +74,7 @@ public class Arduino implements ArduinoInterface
      * The actual pump switch action on the Arduino
      * @param state
      */
-    private String togglePump(int state)
+    public String togglePump(int state)
     {
         if(state == 1) {
             this.serialConnector.sendData("pumpon");
