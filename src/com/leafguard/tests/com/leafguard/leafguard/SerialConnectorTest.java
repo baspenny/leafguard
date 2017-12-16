@@ -1,32 +1,37 @@
 package com.leafguard.leafguard;
 
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
-public class SerialConnectorTest {
+public class SerialConnectorTest  {
+
+    SerialConnector serialConnector = new SerialConnector();
+
     @Test
-    public void initialize() throws Exception {
+    public void initialize()  {
     }
 
     @Test
-    public void sendData(String message) throws Exception {
+    public void sendData()  {
+        serialConnector.initialize();
+        serialConnector.sendData("pumpon");
+
+        String expecting = "switching on";
+        String actual = serialConnector.getResponse();
+        assertEquals(expecting, actual);
     }
 
     @Test
-    public String receiveData() throws Exception {
-        return "moisture=48&pumpstate=0";
+    public void receiveData()  {
     }
 
     @Test
-    public void close() throws Exception {
+    public void close()  {
     }
 
     @Test
-    public void serialEvent() throws Exception {
+    public void serialEvent()  {
     }
-
-
 
 
 }

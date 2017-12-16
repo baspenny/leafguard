@@ -32,6 +32,9 @@ public class SerialConnector implements SerialPortEventListener, SerialConnector
 
     private String response;
 
+    public String getResponse() {
+        return response;
+    }
 
     public void initialize() {
 
@@ -131,7 +134,6 @@ public class SerialConnector implements SerialPortEventListener, SerialConnector
         }
         // Ignore all the other eventTypes, but you should consider the other ones.
     }
-
 
 //    public static void main(String[] args) throws Exception {
 //        SerialConnector main = new SerialConnector();
