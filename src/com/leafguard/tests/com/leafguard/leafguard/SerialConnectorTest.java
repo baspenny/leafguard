@@ -6,6 +6,8 @@ import static org.junit.Assert.*;
 public class SerialConnectorTest  {
 
     SerialConnector serialConnector = new SerialConnector();
+    Arduino arduino = new Arduino(serialConnector);
+
 
     @Test
     public void initialize()  {
