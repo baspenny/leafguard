@@ -8,11 +8,6 @@ public class SerialConnectorTest  {
     SerialConnector serialConnector = new SerialConnector();
     Arduino arduino = new Arduino(serialConnector);
 
-
-    @Test
-    public void initialize()  {
-    }
-
     @Test
     public void sendData()  {
         serialConnector.initialize();
@@ -21,19 +16,17 @@ public class SerialConnectorTest  {
         String expecting = "switching on";
         String actual = serialConnector.getResponse();
         assertEquals(expecting, actual);
+        serialConnector.close();
     }
 
     @Test
     public void receiveData()  {
+        serialConnector.initialize();
+        serialConnector.sendData("pumpoff");
+
+        String expecting = "switching off";
+        String actual = serialConnector.getResponse();
+        assertEquals(expecting, actual);
+        serialConnector.close();
     }
-
-    @Test
-    public void close()  {
-    }
-
-    @Test
-    public void serialEvent()  {
-    }
-
-
 }
