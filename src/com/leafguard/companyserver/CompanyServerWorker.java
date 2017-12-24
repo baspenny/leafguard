@@ -1,5 +1,6 @@
 package com.leafguard.companyserver;
 
+import com.leafguard.Log;
 import java.io.*;
 import java.net.Socket;
 
@@ -27,10 +28,20 @@ public class CompanyServerWorker implements Runnable
             // Get the uuid as the first message from the Server
             this.uuid = in.readUTF();
 
+            // If client is not allowed, end this thread
+            if(!this.checkIfClientIsAllowed(this.uuid)) {
+                out.writeUTF("Client not allowed... Terminating thread");
+                out.flush();
+                in.close();
+                out.close();
+                socket.close();
+                keepRunning = false;
+            }
+
             while (keepRunning)
             {
-                this.clientMessage = in.readUTF();
 
+                this.clientMessage = in.readUTF();
 
                 if(this.clientMessage.equals("stop")) {
                     out.writeUTF("Stopping");
@@ -43,7 +54,7 @@ public class CompanyServerWorker implements Runnable
                 }
             }
             // Log of message
-            System.out.println("Thread with UUID "+ this.getUniqueID() + " disconnecting and cleaning up!");
+            Log.info("CompanyServerWorker: Client with UUID " + this.getClientID() + " disconnecting and cleaning up!");
             // Cleaning up
             in.close();
             out.close();
@@ -54,8 +65,20 @@ public class CompanyServerWorker implements Runnable
         }
 
     }
+    private boolean checkIfClientIsAllowed(String uuid)
+    {
+        for (String client: companyServer.getAllowedClients()
+             ) {
+            if(client.equals(uuid)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-    public String getUniqueID() {
+
+
+    public String getClientID() {
         return this.uuid;
     }
 

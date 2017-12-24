@@ -9,18 +9,25 @@ import java.util.UUID;
 public class Client
 {
     private Boolean run = true;
-    private final UUID uuid = UUID.randomUUID();
+    private String uuid;
     private DataOutputStream out;
     private DataInputStream in;
 
-    public Client()
+    public Client(String uuid)
     {
+        try {
+            this.setUuid(uuid);
+        } catch (InvalidObjectException e) {
+            Log.warning("Client.java: There was a problem: "+e.getMessage()+"... Exiting");
+            System.exit(1);
+        }
+
         try {
             Socket socket   = new Socket("127.0.0.1", 3101);
             this.in         = new DataInputStream(socket.getInputStream());
             this.out        = new DataOutputStream(socket.getOutputStream());
 
-            out.writeUTF(this.uuid.toString());
+            out.writeUTF(this.uuid);
             out.flush();
 
         } catch (IOException e) {
@@ -35,7 +42,7 @@ public class Client
         try {
             out.writeUTF(message);
             out.flush();
-            Log.info("Sending from uuid " + this.uuid);
+            Log.info("Client.java: Sending from uuid " + this.uuid);
             ret = in.readUTF();
 
         } catch (IOException e) {
@@ -48,7 +55,7 @@ public class Client
         try {
             out.writeUTF("stop");
             out.flush();
-            Log.info(this.uuid + " disconnecting");
+            Log.info("Client.java: "+this.uuid + " disconnecting");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -59,4 +66,15 @@ public class Client
         return true;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    private void setUuid(String uuid) throws InvalidObjectException
+    {
+        if(uuid.isEmpty() || uuid.length() <= 0 || uuid.equals(null)) {
+            throw new InvalidObjectException("No uuid given");
+        }
+        this.uuid = uuid;
+    }
 }

@@ -1,5 +1,6 @@
 package com.leafguard.client;
 
+import com.leafguard.Log;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -23,15 +24,20 @@ public class ClientGui extends Application
     private String response;
     protected Boolean run = true;
     private int moisture = 7;
+    private String uuid = "";
 
     @Override
     public void start(Stage stage)
     {
-        this.stage = stage;
-   //     this.showLoginDialog();
+        // This is the identity from the Client App. Now hardcoded
+        // @todo: Make authentication depend on user input.
+        // this.showLoginDialog();
+        this.setUuid("df309914-e898-11e7-80c1-9a214cf093af");
 
+        this.stage = stage;
 
         if(run) {
+
             //this.getDataFromServer();
             this.showMainWindow();
         }
@@ -154,39 +160,39 @@ public class ClientGui extends Application
 
 
         waterButton.setOnMouseClicked(event -> {
-            Client client = new Client();
+            Client client = new Client(this.uuid);
             // @todo process the data received from the server into the GUI
 
             String response = client.sendMessage("data");
-            System.out.println(response);
+            Log.info("ClientGui.java: "+response);
             client.disconnect();
         });
 
 
         item1.setOnMousePressed(event -> {
-            Client client = new Client();
+            Client client = new Client(this.uuid);
             // @todo process the data received from the server into the GUI
 
             String response = client.sendMessage("Dit is knoppie een....");
-            System.out.println(response);
+            Log.info("ClientGui.java: "+response);
             client.disconnect();
         });
 
         item2.setOnMousePressed(event -> {
-            Client client = new Client();
+            Client client = new Client(this.uuid);
             // @todo process the data received from the server into the GUI
 
             String response = client.sendMessage("Dit is knop 2!!!");
-            System.out.println(response);
+            Log.info("ClientGui.java: "+response);
             client.disconnect();
         });
 
         item3.setOnMousePressed(event -> {
-            Client client = new Client();
+            Client client = new Client(this.uuid);
             // @todo process the data received from the server into the GUI
 
             String response = client.sendMessage("Hallo van knop drie!!!");
-            System.out.println(response);
+            Log.info("ClientGui: "+response);
             client.disconnect();
         });
 
@@ -199,7 +205,7 @@ public class ClientGui extends Application
     }
 
     private void getDataFromServer() {
-        Client client = new Client();
+        Client client = new Client(this.uuid);
         // @todo process the data received from the server into the GUI
         // ....
         // ....
@@ -209,7 +215,7 @@ public class ClientGui extends Application
 
     protected void sendRequest(String username, String password)
     {
-        Client client = new Client();
+        Client client = new Client(this.uuid);
         client.checkCredentials(username, password);
     }
 
@@ -229,4 +235,9 @@ public class ClientGui extends Application
     public void setMoisture(int moisture) {
         this.moisture = moisture;
     }
-}
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+ }

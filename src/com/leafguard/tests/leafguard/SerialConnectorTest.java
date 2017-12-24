@@ -1,4 +1,4 @@
-package com.leafguard.tests;
+package leafguard;
 
 import com.leafguard.leafguard.Arduino;
 import com.leafguard.leafguard.SerialConnectorInterface;

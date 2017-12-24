@@ -1,4 +1,4 @@
-package com.leafguard.tests;
+package leafguard;
 
 
 import com.leafguard.leafguard.Arduino;
@@ -21,9 +21,7 @@ public class ArduinoTest {
 
         int expectMoisture = 71;
         int actualMoisture = arduino.getMoisturePercentage();
-
         assertEquals(expectMoisture, actualMoisture);
-        System.out.println("Current moisturePercentage: " + actualMoisture);
         serialConnector.close();
     }
 

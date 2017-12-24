@@ -1,6 +1,7 @@
 package com.leafguard.companyserver;
 
 import com.leafguard.Log;
+import com.leafguard.client.Client;
 import com.leafguard.homeserver.HomeServer;
 import com.leafguard.leafguard.Arduino;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
@@ -16,12 +17,15 @@ public class CompanyServer
 {
     private ServerSocket serverSocket;
     private ArrayList<HomeServer> homeServers;
+    private ArrayList<String> allowedClients;
 
     public CompanyServer()
     {
+        this.registerAllowedClients();
         try {
             this.serverSocket = new ServerSocket(3101);
             Log.info("COMPANY-SERVER started");
+
             this.handleIncomingConnection();
 
         } catch (IOException e) {
@@ -64,7 +68,7 @@ public class CompanyServer
 
     /**
      * Make a connection to the homeserver.
-     * This is a statefull connection
+     * This is a stateful connection
      */
     public void connectToHomeServer()
     {
@@ -85,7 +89,22 @@ public class CompanyServer
             System.out.println(e.getMessage());
         }
     }
-    // Nieuwe method die een socket verbinding opzet naar de homeserver
-    // Statefull
 
+    public ArrayList<String> getAllowedClients() {
+        return allowedClients;
+    }
+
+    /**
+     * This method registeres all the allowed clients
+     * @todo consideration: make an interface so a company admin can grant acces to a device
+     */
+    private void registerAllowedClients()
+    {
+        this.allowedClients = new ArrayList<>();
+        this.allowedClients.add("df309914-e898-11e7-80c1-9a214cf093ae");
+        this.allowedClients.add("df309914-e898-11e7-80c1-9a214cf093af");
+
+
+        Log.info("Registred clientIds: " + this.allowedClients);
+    }
 }
