@@ -1,5 +1,8 @@
-package com.leafguard.leafguard;
+package com.leafguard.tests;
 
+import com.leafguard.leafguard.Arduino;
+import com.leafguard.leafguard.SerialConnectorInterface;
+import com.leafguard.leafguard.SerialConnectorMock;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

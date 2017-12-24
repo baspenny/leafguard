@@ -11,6 +11,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Enumeration;
 
+/**
+ * Class SerialConnectorMock
+ *
+ * The purpose of this class is to mock/mimmick an serial connection to a Arduino
+ * This allows us to test more than one Arduino instances because this
+ * could be the case in a real world scenario
+ */
+
 public class SerialConnectorMock implements SerialConnectorInterface
 {
     private static final int ON_STATE = 1;
