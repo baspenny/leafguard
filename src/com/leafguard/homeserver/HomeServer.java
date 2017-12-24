@@ -45,10 +45,10 @@ public class HomeServer {
     }
 
     private void createThread(Socket socket) {
-        HomeServerWorker homeServerWorker = new HomeServerWorker(socket, this);
-        Thread t = new Thread(homeServerWorker);
-        t.start();
-        Log.info("New HomeServerWorker dispatched");
+//        HomeServerWorker homeServerWorker = new HomeServerWorker(socket, this);
+//        Thread t = new Thread(homeServerWorker);
+//        t.start();
+//        Log.info("New HomeServerWorker dispatched");
     }
 
     public static void main(String[] args) {

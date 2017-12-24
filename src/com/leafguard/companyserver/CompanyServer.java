@@ -45,6 +45,24 @@ public class CompanyServer
         t.start();
     }
 
+
+    private void connectToHomeUnit()
+    {
+        try {
+            Socket socket   = new Socket("127.0.0.1", 3201);
+            HomeServerWorker ct = new HomeServerWorker(socket, this);
+            Thread t = new Thread(ct);
+
+        } catch (IOException e) {
+
+        }
+    }
+
+
+
+
+
+
     private void handleIncomingConnection()
     {
         Log.info("Listening for client connections...");
