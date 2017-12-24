@@ -173,7 +173,7 @@ public class ClientGui extends Application
             Client client = new Client(this.uuid);
             // @todo process the data received from the server into the GUI
 
-            String response = client.sendMessage("Dit is knoppie een....");
+            String response = client.sendMessage("hit_home_server");
             Log.info("ClientGui.java: "+response);
             client.disconnect();
         });

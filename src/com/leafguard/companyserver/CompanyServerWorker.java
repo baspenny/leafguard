@@ -43,6 +43,11 @@ public class CompanyServerWorker implements Runnable
 
                 this.clientMessage = in.readUTF();
 
+                if(this.clientMessage.equals("hit_home_server")) {
+                    companyServer.connectToHomeServer();
+                }
+
+
                 if(this.clientMessage.equals("stop")) {
                     out.writeUTF("Stopping");
                     out.flush();

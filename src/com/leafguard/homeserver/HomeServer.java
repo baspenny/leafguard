@@ -1,7 +1,6 @@
 package com.leafguard.homeserver;
 
 import com.leafguard.Log;
-import com.leafguard.companyserver.HomeServerWorker;
 import com.leafguard.leafguard.ArduinoInterface;
 
 import java.io.IOException;
@@ -20,7 +19,7 @@ public class HomeServer {
     public HomeServer()
     {
         try {
-            this.serverSocket = new ServerSocket(3201);
+            this.serverSocket = new ServerSocket(6201);
             Log.info("HOME-SERVER started");
             this.handleIncomingConnection();
 
@@ -35,8 +34,10 @@ public class HomeServer {
         Log.info("Listening for client connections...");
         while (true) {
             try {
-                this.createThread(this.serverSocket.accept());
+
+                this.startThread(this.serverSocket.accept());
                 Log.info("New incoming connection");
+
             } catch (IOException e) {
                 System.out.println(e.getMessage());
                 System.exit(1);
@@ -44,15 +45,37 @@ public class HomeServer {
         }
     }
 
-    private void createThread(Socket socket) {
-//        HomeServerWorker homeServerWorker = new HomeServerWorker(socket, this);
-//        Thread t = new Thread(homeServerWorker);
-//        t.start();
-//        Log.info("New HomeServerWorker dispatched");
+    /**
+     * Starts a new Thread
+     * @param socket
+     */
+    private void startThread(Socket socket)
+    {
+        HomeServerWorker ct = new HomeServerWorker(socket, this);
+        Thread t = new Thread(ct);
+        t.start();
     }
 
+//    private void handleIncomingConnection()
+//    {
+//        Log.info("Listening for client connections...");
+//
+//        while(true) {
+//            try {
+//                this.startThread(this.serverSocket.accept());
+//                Log.info("Resuming listening for new connections...");
+//
+//            } catch (Exception e) {
+//                System.out.println(e.getMessage());
+//                System.exit(1);
+//            }
+//        }
+//    }
+
+    public void printMessage() {
+        System.out.println("hello");
+    }
     public static void main(String[] args) {
         HomeServer homeServer = new HomeServer();
     }
-
 }

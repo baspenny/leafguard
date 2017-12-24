@@ -49,10 +49,7 @@ public class CompanyServer
     private void connectToHomeUnit()
     {
         try {
-            Socket socket   = new Socket("127.0.0.1", 3201);
-            HomeServerWorker ct = new HomeServerWorker(socket, this);
-            Thread t = new Thread(ct);
-
+            Socket socket   = new Socket("127.0.0.1", 6201);
         } catch (IOException e) {
 
         }
@@ -95,13 +92,14 @@ public class CompanyServer
         // Zoek in een lijst van bekende ip adressen de juiste bestemming voor de client
         // (localhost wordt dan ip van de homeserver waat we verbinding naar toe willen maken )
         try {
-            Socket socket           = new Socket("localhost", 3201);
-            DataOutputStream out    = new DataOutputStream(socket.getOutputStream());
-            DataInputStream in      = new DataInputStream(socket.getInputStream());
+            Socket socket           = new Socket("localhost", 6201);
+//            DataOutputStream out    = new DataOutputStream(socket.getOutputStream());
+//            DataInputStream in      = new DataInputStream(socket.getInputStream());
+//
 
-            while (stayConnected) {
-                    
-            }
+//            while (stayConnected) {
+//
+//            }
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
