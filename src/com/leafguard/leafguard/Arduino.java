@@ -6,14 +6,14 @@ public class Arduino implements ArduinoInterface
     private int pumpState;
     private int moisturePercentage;
 
-    private SerialConnector serialConnector;
+    private SerialConnectorInterface serialConnector;
 
     /**
      * Constructor
      * Set the serialconnector and load the object with data from Arduino
      * @param serialConnector
      */
-    public Arduino(SerialConnector serialConnector)
+    public Arduino(SerialConnectorInterface serialConnector)
     {
         this.serialConnector = serialConnector;
         serialConnector.initialize();

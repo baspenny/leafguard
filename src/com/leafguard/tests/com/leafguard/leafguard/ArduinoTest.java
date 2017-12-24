@@ -8,15 +8,15 @@ import static org.junit.Assert.*;
 
 public class ArduinoTest {
 
-    SerialConnector serialConnector = new SerialConnector();
+    SerialConnectorInterface serialConnector = new SerialConnectorMock();
     Arduino arduino = new Arduino(serialConnector);
 
-
+    // @todo: Huub, kun je er echt vanuit gaan dat de vochigheid -48 is? Het lijkt mij een variabele dus niet op deze manier te testen.
     @Test
     public void getMoisturePercentage() {
         serialConnector.initialize();
 
-        int expectMoisture = -48;
+        int expectMoisture = 71;
         int actualMoisture = arduino.getMoisturePercentage();
 
         assertEquals(expectMoisture, actualMoisture);

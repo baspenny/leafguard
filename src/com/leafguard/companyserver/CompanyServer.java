@@ -62,6 +62,10 @@ public class CompanyServer
         CompanyServer server = new CompanyServer();
     }
 
+    /**
+     * Make a connection to the homeserver.
+     * This is a statefull connection
+     */
     public void connectToHomeServer()
     {
         boolean stayConnected = true;

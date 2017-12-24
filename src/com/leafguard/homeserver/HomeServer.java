@@ -2,13 +2,20 @@ package com.leafguard.homeserver;
 
 import com.leafguard.Log;
 import com.leafguard.companyserver.HomeServerWorker;
+import com.leafguard.leafguard.ArduinoInterface;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class HomeServer {
     private ServerSocket serverSocket;
+    /**
+     * This is the array with arduinos ho have been instantiated
+     * All these connections are ment to be statefull
+     */
+    private ArrayList<ArduinoInterface> arduinos = new ArrayList<ArduinoInterface>();
 
     public HomeServer()
     {

@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 public class SerialConnectorTest  {
 
-    SerialConnector serialConnector = new SerialConnector();
+    SerialConnectorInterface serialConnector = new SerialConnectorMock();
     Arduino arduino = new Arduino(serialConnector);
 
     @Test
@@ -14,7 +14,7 @@ public class SerialConnectorTest  {
         serialConnector.sendData("pumpon");
 
         String expecting = "switching on";
-        String actual = serialConnector.getResponse();
+        String actual = serialConnector.receiveData();
         assertEquals(expecting, actual);
         serialConnector.close();
     }
@@ -25,7 +25,7 @@ public class SerialConnectorTest  {
         serialConnector.sendData("pumpoff");
 
         String expecting = "switching off";
-        String actual = serialConnector.getResponse();
+        String actual = serialConnector.receiveData();
         assertEquals(expecting, actual);
         serialConnector.close();
     }
