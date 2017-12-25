@@ -31,12 +31,12 @@ public class HomeServer {
 
     private void handleIncomingConnection()
     {
-        Log.info("Listening for client connections...");
+        Log.info("HomeServer: Listening for client connections...");
         while (true) {
             try {
 
                 this.startThread(this.serverSocket.accept());
-                Log.info("New incoming connection");
+                Log.info("HomeServer: New incoming connection");
 
             } catch (IOException e) {
                 System.out.println(e.getMessage());
@@ -73,7 +73,7 @@ public class HomeServer {
 //    }
 
     public void printMessage() {
-        System.out.println("hello");
+        System.out.println("This is printmessage in Homeserver invoked by HomeServerWorker");
     }
     public static void main(String[] args) {
         HomeServer homeServer = new HomeServer();

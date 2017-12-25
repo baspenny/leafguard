@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="712.0" prefWidth="405.0" style="-fx-background-color: #e5e5e5;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.leafguard.client.ClientGuiController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" />
+    <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints hgrow="SOMETIMES" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="594.0" minHeight="10.0" prefHeight="554.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <HBox prefHeight="64.0" prefWidth="405.0" GridPane.columnSpan="3">
+         <children>
+            <ImageView fitHeight="75.0" fitWidth="405.0">
+               <image>
+                  <Image url="@img/header.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <HBox GridPane.columnSpan="3" GridPane.rowIndex="1">
+         <children>
+            <Rectangle id="DashButton1" fx:id="DashButton1" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="60.0" onMouseClicked="#clickDashButton1" stroke="#cccccc" strokeType="INSIDE" strokeWidth="0.0" width="135.0" />
+            <Rectangle id="DashButton2" fx:id="DashButton2" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="60.0" onMouseClicked="#clickDashButton2" stroke="#cccccc" strokeType="INSIDE" strokeWidth="0.0" width="135.0" />
+            <Rectangle id="DashButton3" fx:id="DashButton3" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="60.0" onMouseClicked="#clickDashButton3" stroke="#cccccc" strokeType="INSIDE" strokeWidth="0.0" width="135.0" />
+         </children></HBox>
+      <HBox id="graphContainer" prefHeight="502.0" prefWidth="405.0" GridPane.columnSpan="3" GridPane.rowIndex="2">
+         <padding>
+            <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+         </padding>
+         <children>
+            <Group>
+               <children>
+                  <Arc id="arcFull" centerX="47.0" centerY="50.0" fill="#ffffff00" length="240.0" radiusX="150.0" radiusY="150.0" startAngle="-30.0" stroke="#6f6f6f" strokeWidth="14.0" />
+                  <Arc id="arcValue" fx:id="arcValue" centerX="47.0" centerY="50.0" fill="#ffffff00" length="1.0" radiusX="150.0" radiusY="150.0" startAngle="-150.0" stroke="RED" strokeWidth="14.0" />
+                  <ImageView fitHeight="200.0" fitWidth="133.0" layoutX="-19.0" layoutY="37.0">
+                     <image>
+                        <Image url="@img/plant.png" />
+                     </image>
+                  </ImageView>
+                  <Text fx:id="moistureValue" fill="#6f6f6f" strokeType="OUTSIDE" strokeWidth="0.0" text="" x="10.0" y="10.0">
+                     <font>
+                        <Font name="Verdana" size="36.0" />
+                     </font>
+                  </Text>
+                  <Circle id="waterButton" fx:id="waterButton" centerX="47.0" centerY="320.0" fill="#37df8b" layoutY="-13.0" onMouseClicked="#giveWater" radius="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                  <ImageView fitWidth="50.0" layoutX="23.0" layoutY="282.0" preserveRatio="true">
+                     <image>
+                        <Image url="@img/drops.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="face" fitHeight="35.0" fitWidth="46.0" layoutX="25.0" layoutY="187.0">
+                     <image>
+                        <Image url="@img/happy.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Group>
+         </children>
+      </HBox>
+   </children>
+</GridPane>

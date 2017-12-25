@@ -45,21 +45,6 @@ public class CompanyServer
         t.start();
     }
 
-
-    private void connectToHomeUnit()
-    {
-        try {
-            Socket socket   = new Socket("127.0.0.1", 6201);
-        } catch (IOException e) {
-
-        }
-    }
-
-
-
-
-
-
     private void handleIncomingConnection()
     {
         Log.info("Listening for client connections...");
@@ -96,7 +81,7 @@ public class CompanyServer
 //            DataOutputStream out    = new DataOutputStream(socket.getOutputStream());
 //            DataInputStream in      = new DataInputStream(socket.getInputStream());
 //
-
+//
 //            while (stayConnected) {
 //
 //            }
