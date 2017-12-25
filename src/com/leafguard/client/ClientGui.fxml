@@ -44,7 +44,7 @@
             <Group>
                <children>
                   <Arc id="arcFull" centerX="47.0" centerY="50.0" fill="#ffffff00" length="240.0" radiusX="150.0" radiusY="150.0" startAngle="-30.0" stroke="#6f6f6f" strokeWidth="14.0" />
-                  <Arc id="arcValue" fx:id="arcValue" centerX="47.0" centerY="50.0" fill="#ffffff00" length="1.0" radiusX="150.0" radiusY="150.0" startAngle="-150.0" stroke="RED" strokeWidth="14.0" />
+                  <Arc id="moistureGauge" fx:id="moistureGauge" centerX="47.0" centerY="50.0" fill="#ffffff00" length="1.0" radiusX="150.0" radiusY="150.0" startAngle="-150.0" stroke="RED" strokeWidth="14.0" />
                   <ImageView fitHeight="200.0" fitWidth="133.0" layoutX="-19.0" layoutY="37.0">
                      <image>
                         <Image url="@img/plant.png" />

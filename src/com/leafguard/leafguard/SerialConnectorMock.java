@@ -33,7 +33,7 @@ public class SerialConnectorMock implements SerialConnectorInterface
 
     public void initialize()
     {
-        System.out.println("Started");
+        //System.out.println("Started");
     }
 
     public void sendData(String message)

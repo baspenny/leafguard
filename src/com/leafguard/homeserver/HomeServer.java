@@ -73,7 +73,7 @@ public class HomeServer {
 //    }
 
     public void printMessage() {
-        System.out.println("This is printmessage in Homeserver invoked by HomeServerWorker");
+        Log.info("This is printmessage in Homeserver invoked by HomeServerWorker");
     }
     public static void main(String[] args) {
         HomeServer homeServer = new HomeServer();
