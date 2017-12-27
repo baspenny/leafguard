@@ -7,56 +7,38 @@ import java.net.Socket;
 public class CompanyServerWorker implements Runnable
 {
     private Socket          socket;
+    private DataInputStream in;
+    private DataOutputStream out;
     private CompanyServer   companyServer;
     private String          uuid;
-    private String          clientMessage;
     private boolean         keepRunning = true;
 
 
-    public CompanyServerWorker(Socket socket, CompanyServer companyServer)
+    public CompanyServerWorker(DataInputStream in , DataOutputStream out, String uuid, CompanyServer companyServer)
     {
         this.socket         = socket;
+        this.in             = in;
+        this.out            = out;
         this.companyServer  = companyServer;
+        this.uuid = uuid;
     }
 
     public void run() {
         try {
-            // Prepare in and output streams
-            DataInputStream  in  = new DataInputStream(this.socket.getInputStream());
-            DataOutputStream out = new DataOutputStream(this.socket.getOutputStream());
-
-            // Get the uuid as the first message from the Server
-            this.uuid = in.readUTF();
-
-            // If client is not allowed, end this thread
-            if(!this.checkIfClientIsAllowed(this.uuid)) {
-                out.writeUTF("Client not allowed... Terminating thread");
-                out.flush();
-                in.close();
-                out.close();
-                socket.close();
-                keepRunning = false;
-            }
-
+            String clientMessage = "";
+            String ret = "";
             while (keepRunning)
             {
+                // Read the message from Client.java
+                clientMessage = in.readUTF();
 
-                this.clientMessage = in.readUTF();
+                //System.out.println("CompanyserverWorker message: " + this.uuid);
+                // Pass the message to the HomeServer trough companyserver;
+                out.writeUTF(companyServer.connectToHomeServer(this.uuid, clientMessage));
+                out.flush();
+                break;
+                //
 
-                if(this.clientMessage.equals("hit_home_server")) {
-                    companyServer.connectToHomeServer();
-                }
-
-
-                if(this.clientMessage.equals("stop")) {
-                    out.writeUTF("Stopping");
-                    out.flush();
-                    this.keepRunning = false;
-                    break;
-                } else {
-                    out.writeUTF(this.clientMessage + " From thread" );
-                    out.flush();
-                }
             }
             // Log of message
             Log.info("CompanyServerWorker: Client with UUID " + this.getClientID() + " disconnecting and cleaning up!");
