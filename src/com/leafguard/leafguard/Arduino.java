@@ -52,7 +52,7 @@ public class Arduino implements ArduinoInterface
      * 1 = active
      * 0 = inactive
      */
-    public String controlPump(int state) {
+    public synchronized String controlPump(int state) {
         // Set a fresh value in the pumpState property
         this.getPumpState();
 
@@ -80,6 +80,9 @@ public class Arduino implements ArduinoInterface
             this.serialConnector.sendData("pumpon");
             return "ok";
         }
+
+
+
         this.serialConnector.sendData("pumpoff");
         return "ok";
     }
