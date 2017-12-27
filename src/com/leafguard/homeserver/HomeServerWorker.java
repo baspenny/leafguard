@@ -23,9 +23,9 @@ public class HomeServerWorker implements Runnable
     public HomeServerWorker(Socket socket, HomeServer server) {
         this.socket         = socket;
         this.homeServer     = server;
-        this.uniqueID       = UUID.randomUUID().toString();
-        try {
+        this.uniqueID       = "";
 
+        try {
             this.input = new DataInputStream(this.socket.getInputStream());
             this.output = new DataOutputStream(this.socket.getOutputStream());
         } catch (IOException e) {
@@ -36,17 +36,21 @@ public class HomeServerWorker implements Runnable
     @Override
     public void run() {
 
-        Log.info("hello from HomeServerWorker");
-        homeServer.printMessage();
-        SerialConnectorInterface sc = new SerialConnectorMock();
-        Arduino arduino = new Arduino(sc);
+
 
         try {
+            String messageFromComanyServer = input.readUTF();
 
-            output.writeUTF(Integer.toString(arduino.getMoisturePercentage()));
-            output.flush();
+            this.output.writeUTF(messageFromComanyServer + ",  OK!!! from HomeserverWorker moist:::" + Integer.toString(homeServer.arduino.getMoisturePercentage()));
+            this.output.flush();
+            Log.info("HomeServerWorker: disconnecting from CompanyServer and cleaning up!");
+            // Cleaning up
+            this.input.close();
+            this.output.close();
+            this.socket.close();
+
         } catch (IOException e) {
-
+            Log.critical(e.getMessage());
         }
 
 

@@ -46,7 +46,6 @@ public class ClientGuiController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.setUuid("df309914-e898-11e7-80c1-9a214cf093af");
-
         this.reInitGui();
     }
 
@@ -87,7 +86,7 @@ public class ClientGuiController implements Initializable
         // @todo process the data received from the server into the GUI
         // ....
         // ....
-        String response = client.sendMessage("hit_home_server");
+        String response = client.sendMessage("hello from controller");
         System.out.println(response);
     }
 

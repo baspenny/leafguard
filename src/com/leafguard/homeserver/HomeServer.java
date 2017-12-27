@@ -1,15 +1,23 @@
 package com.leafguard.homeserver;
 
 import com.leafguard.Log;
+import com.leafguard.leafguard.Arduino;
 import com.leafguard.leafguard.ArduinoInterface;
+import com.leafguard.leafguard.SerialConnectorMock;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Set;
 
-public class HomeServer {
+public class HomeServer
+{
+
     private ServerSocket serverSocket;
+    private ArrayList<Thread> threads = new ArrayList<>();
+    public Arduino arduino;
+
     /**
      * This is the array with arduinos ho have been instantiated
      * All these connections are ment to be statefull
@@ -18,6 +26,9 @@ public class HomeServer {
 
     public HomeServer()
     {
+        this.arduino = new Arduino(new SerialConnectorMock());
+
+
         try {
             this.serverSocket = new ServerSocket(6201);
             Log.info("HOME-SERVER started");
@@ -31,7 +42,7 @@ public class HomeServer {
 
     private void handleIncomingConnection()
     {
-        Log.info("HomeServer: Listening for client connections...");
+        Log.info("HomeServer: Listening for Company-server connections...");
         while (true) {
             try {
 
@@ -56,21 +67,7 @@ public class HomeServer {
         t.start();
     }
 
-//    private void handleIncomingConnection()
-//    {
-//        Log.info("Listening for client connections...");
-//
-//        while(true) {
-//            try {
-//                this.startThread(this.serverSocket.accept());
-//                Log.info("Resuming listening for new connections...");
-//
-//            } catch (Exception e) {
-//                System.out.println(e.getMessage());
-//                System.exit(1);
-//            }
-//        }
-//    }
+
 
     public void printMessage() {
         Log.info("This is printmessage in Homeserver invoked by HomeServerWorker");
