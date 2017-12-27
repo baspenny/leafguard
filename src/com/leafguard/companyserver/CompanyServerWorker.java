@@ -25,8 +25,10 @@ public class CompanyServerWorker implements Runnable
 
     public void run() {
         try {
+
             String clientMessage = "";
             String ret = "";
+
             while (keepRunning)
             {
                 // Read the message from Client.java

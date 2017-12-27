@@ -84,12 +84,6 @@ public class CompanyServer
             // Add the worker to the HashMap
             this.workers.put(uuid, csw);
 
-//            for (Map.Entry worker : this.workers.entrySet()) {
-//                System.out.println(worker.getKey());
-//                System.out.println(worker.getValue().toString());
-//            }
-
-
         } catch (IOException e) {
 
         }

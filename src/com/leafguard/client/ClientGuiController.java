@@ -52,7 +52,7 @@ public class ClientGuiController implements Initializable
     @FXML
     private void giveWater() {
         this.moisture = 89;
-        this.getDataFromServer();
+        this.getDataFromServer("waterplant");
         this.reInitGui();
 
     }
@@ -81,13 +81,15 @@ public class ClientGuiController implements Initializable
         this.reInitGui();
     }
 
-    private void getDataFromServer() {
+    private void getDataFromServer(String message) {
         Client client = new Client(this.uuid);
         // @todo process the data received from the server into the GUI
         // ....
         // ....
-        String response = client.sendMessage("hello from controller");
-        System.out.println(response);
+        String response = client.sendMessage(message);
+        this.moisture = Integer.parseInt(response);
+        this.reInitGui();
+        System.out.println(response + " Ja toch");
     }
 
     private void reInitGui()

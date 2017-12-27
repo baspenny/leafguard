@@ -36,12 +36,19 @@ public class HomeServerWorker implements Runnable
     @Override
     public void run() {
 
-
-
         try {
-            String messageFromComanyServer = input.readUTF();
+            String messageFromCompanyServer = input.readUTF();
+            String returnVal = "";
 
-            this.output.writeUTF(messageFromComanyServer + ",  OK!!! from HomeserverWorker moist:::" + Integer.toString(homeServer.arduino.getMoisturePercentage()));
+            if(messageFromCompanyServer.equals("moisture")) {
+                returnVal = Integer.toString(homeServer.arduino.getMoisturePercentage());
+            }
+
+            if(messageFromCompanyServer.equals("waterplant")) {
+                returnVal = homeServer.arduino.controlPump(1);
+            }
+
+            this.output.writeUTF(Integer.toString(homeServer.arduino.getMoisturePercentage()));
             this.output.flush();
             Log.info("HomeServerWorker: disconnecting from CompanyServer and cleaning up!");
             // Cleaning up
@@ -52,17 +59,9 @@ public class HomeServerWorker implements Runnable
         } catch (IOException e) {
             Log.critical(e.getMessage());
         }
-
-
     }
 
     public String getUniqueID() {
         return uniqueID;
     }
-
-
-
-
 }
-
-

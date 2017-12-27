@@ -29,7 +29,7 @@ public class SerialConnectorMock implements SerialConnectorInterface
     private int yellowLed       = OFF_STATE;
     private int redLed          = ON_STATE;
     private int pumpState       = OFF_STATE;
-    private int moistureValue   = 71;
+    private int moistureValue   = 56;
 
     public void initialize()
     {
@@ -76,6 +76,10 @@ public class SerialConnectorMock implements SerialConnectorInterface
     public synchronized void serialEvent(SerialPortEvent event)
     {
         // No implementation needed for mock class
+    }
+
+    public int getMoistureValue() {
+        return this.moistureValue;
     }
 
 }

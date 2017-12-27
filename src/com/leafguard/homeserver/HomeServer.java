@@ -16,7 +16,7 @@ public class HomeServer
 
     private ServerSocket serverSocket;
     private ArrayList<Thread> threads = new ArrayList<>();
-    public Arduino arduino;
+    public Arduino arduino; // Statefull object
 
     /**
      * This is the array with arduinos ho have been instantiated
@@ -27,7 +27,6 @@ public class HomeServer
     public HomeServer()
     {
         this.arduino = new Arduino(new SerialConnectorMock());
-
 
         try {
             this.serverSocket = new ServerSocket(6201);
