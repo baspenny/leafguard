@@ -5,12 +5,15 @@ import com.leafguard.homeserver.HomeServer;
 import com.leafguard.leafguard.Arduino;
 import com.leafguard.leafguard.SerialConnectorInterface;
 import com.leafguard.leafguard.SerialConnectorMock;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.UUID;
 
+/**
+ * HomeServerWorker
+ * A thread class for handling the socket connection
+ * This is where the magic happens!
+ */
 public class HomeServerWorker implements Runnable
 {
     private Socket          socket;
@@ -26,7 +29,7 @@ public class HomeServerWorker implements Runnable
         this.uniqueID       = "";
 
         try {
-            this.input = new DataInputStream(this.socket.getInputStream());
+            this.input  = new DataInputStream(this.socket.getInputStream());
             this.output = new DataOutputStream(this.socket.getOutputStream());
         } catch (IOException e) {
 
@@ -40,18 +43,31 @@ public class HomeServerWorker implements Runnable
             String messageFromCompanyServer = input.readUTF();
             String returnVal = "";
 
-            if(messageFromCompanyServer.equals("moisture")) {
-                returnVal = Integer.toString(homeServer.arduino.getMoisturePercentage());
+            // Explode the message from CompanyServer
+            String[] request = messageFromCompanyServer.split("#");
+            String uuid     = request[0];
+            String message  = request[1];
+
+            // Check wich command to run
+            // @todo: Is it realy the responsibility of the thread to do things on the Arduino.?
+            // I think not.
+            if(message.equals("moisture")) {
+                String moisturePercentage = Integer.toString(homeServer.arduino.getMoisturePercentage());
+                returnVal = "succes:" + moisturePercentage;
+            } else if (message.equals("waterplant")) {
+                String ret = homeServer.arduino.controlPump(1);
+                returnVal = "succes:" + ret;
+
+            } else {
+                returnVal = "error:unknown command: " + message;
             }
 
-            if(messageFromCompanyServer.equals("waterplant")) {
-                returnVal = homeServer.arduino.controlPump(1);
-            }
-
-            this.output.writeUTF(Integer.toString(homeServer.arduino.getMoisturePercentage()));
+            // Return response
+            this.output.writeUTF(returnVal);
             this.output.flush();
-            Log.info("HomeServerWorker: disconnecting from CompanyServer and cleaning up!");
+
             // Cleaning up
+            Log.info("HomeServerWorker: disconnecting from CompanyServer and cleaning up!");
             this.input.close();
             this.output.close();
             this.socket.close();

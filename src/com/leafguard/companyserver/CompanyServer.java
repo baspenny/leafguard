@@ -1,14 +1,6 @@
 package com.leafguard.companyserver;
 
 import com.leafguard.Log;
-import com.leafguard.client.Client;
-import com.leafguard.homeserver.HomeServer;
-import com.leafguard.leafguard.Arduino;
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
-import javafx.scene.Parent;
-import org.omg.CORBA.DATA_CONVERSION;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -22,21 +14,25 @@ import java.util.Set;
 public class CompanyServer
 {
     private ServerSocket serverSocket;
+
+    private String targetHomeServer;
+    /**
+     * Arraylist with the allowed clients
+     */
     private ArrayList<String> allowedClients;
 
     /**
-     * Store the created workers
-     * K = uuid
-     * V = CompanyServerWorker Object
+     * Arraylist with all the homeservers registered at LeafGuard
      */
-    private HashMap<String, CompanyServerWorker> workers = new HashMap<>();
+    private HashMap<String, String> homeServers = new HashMap<>();
 
-    // @todo: bind client to specific homeserver
-    private ArrayList<HomeServer> homeServers;
-
+    /**
+     * Constructor for CompanyServer()
+     */
     public CompanyServer()
     {
         this.registerAllowedClients();
+        this.registerHomeservers();
 
         try {
             this.serverSocket = new ServerSocket(3101);
@@ -48,6 +44,10 @@ public class CompanyServer
         }
     }
 
+    /**
+     * When a incoming connection is detected,
+     * handle it
+     */
     private void handleIncomingConnection()
     {
         Log.info("Listening for client connections...");
@@ -75,24 +75,18 @@ public class CompanyServer
             // The client who connects, sends it's uuid
             String uuid = in.readUTF();
 
-            // Create new worker and pass it to a thread
+            // Create new worker and pass it to a thread along
+            // with the input- and output stream, the uuid from
+            // the requesting client and self
             CompanyServerWorker csw = new CompanyServerWorker(in, out, uuid, this);
             Thread t = new Thread(csw);
             // Start the thread
             t.start();
 
-            // Add the worker to the HashMap
-            this.workers.put(uuid, csw);
-
         } catch (IOException e) {
-
+            Log.critical("There was an error starting a CompanyServerWorker: " + e.getCause());
         }
 
-    }
-
-    public static void main(String[] args)
-    {
-        CompanyServer server = new CompanyServer();
     }
 
     /**
@@ -101,22 +95,28 @@ public class CompanyServer
      */
     public String connectToHomeServer(String uuid, String message)
     {
-        // Map the request uuid to an IP address / target plant
+
+        // Do we know this client?
+        if(!this.checkIfClientIsAllowed(uuid)) {
+            return "error:client " +uuid+ "is not allowed";
+        }
+        // Map the uuid from requester to an (ip) address -> target plant
+        if(!this.setTargetHomeServer(uuid)) {
+            return "error:could not resolve destination for client" + uuid;
+        }
+
         String ret = "";
-        // Op basis van bekende ip-adressen
-        // Zoek in een lijst van bekende ip adressen de juiste bestemming voor de client
-        // (localhost wordt dan ip van de homeserver waat we verbinding naar toe willen maken )
+
         try {
-            Socket socket           = new Socket("localhost", 6201);
+            Socket socket           = new Socket(this.targetHomeServer, 6201);
             DataInputStream in      = new DataInputStream(socket.getInputStream());
             DataOutputStream out    = new DataOutputStream(socket.getOutputStream());
 
-
             // Send message to HomeServer
-            out.writeUTF(uuid + " # " + message);
+            // eg: df309914-e898-11e7-80c1-9a214cf093af#givewater
+            out.writeUTF(uuid + "#" + message);
             out.flush();
             ret = in.readUTF();
-            System.out.println("Im here: " + ret);
 
         } catch (IOException e) {
             Log.critical("Could not connect to Home-Server: " +e.getMessage());
@@ -124,18 +124,74 @@ public class CompanyServer
         return ret;
     }
 
-    public ArrayList<String> getAllowedClients() {
+    private ArrayList<String> getAllowedClients() {
         return allowedClients;
     }
 
     /**
-     * This method registeres all the allowed clients
+     * Register all the allowed clients
      * @todo consideration: make an user-interface so a company admin can grant acces to a device
      */
     private void registerAllowedClients()
     {
         this.allowedClients = new ArrayList<>();
+        this.allowedClients.add("df309914-e898-11e7-80c1-9a214cf093ag");
         this.allowedClients.add("df309914-e898-11e7-80c1-9a214cf093ae");
         this.allowedClients.add("df309914-e898-11e7-80c1-9a214cf093af");
     }
+
+    /**
+     * Register all the Homeservers and corresponding LeafGuard units
+     * @todo consideration: make an user-interface so a company admin can map uuid to ip-address
+     */
+    private void registerHomeservers()
+    {
+        this.homeServers = new HashMap<>();
+        this.homeServers.put("df309914-e898-11e7-80c1-9a214cf093ag", "127.0.0.1");
+        this.homeServers.put("df309914-e898-11e7-80c1-9a214cf093ae", "localhost");
+        this.homeServers.put("df309914-e898-11e7-80c1-9a214cf093af", "nobody.none.com");
+    }
+
+    /**
+     * The name says it al ;-)
+     *
+     * @param uuid
+     * @return
+     */
+    private boolean checkIfClientIsAllowed(String uuid)
+    {
+        for (String client: this.getAllowedClients()) {
+            if(client.equals(uuid)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Determine the destination
+     *
+     * @param uuid
+     * @return
+     */
+    private boolean setTargetHomeServer(String uuid)
+    {
+        for (Map.Entry homeserver : homeServers.entrySet()) {
+            if(homeserver.getKey().equals(uuid)) {
+                this.targetHomeServer = homeserver.getValue().toString();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Runnert
+     * @param args
+     */
+    public static void main(String[] args)
+    {
+        CompanyServer server = new CompanyServer();
+    }
+
 }
