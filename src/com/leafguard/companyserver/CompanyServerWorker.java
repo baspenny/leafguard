@@ -6,12 +6,12 @@ import java.net.Socket;
 
 public class CompanyServerWorker implements Runnable
 {
-    private Socket          socket;
-    private DataInputStream in;
-    private DataOutputStream out;
-    private CompanyServer   companyServer;
-    private String          uuid;
-    private boolean         keepRunning = true;
+    private Socket              socket;
+    private DataInputStream     in;
+    private DataOutputStream    out;
+    private CompanyServer       companyServer;
+    private String              uuid;
+    private boolean             keepRunning = true;
 
 
     public CompanyServerWorker(DataInputStream in , DataOutputStream out, String uuid, CompanyServer companyServer)
@@ -20,7 +20,7 @@ public class CompanyServerWorker implements Runnable
         this.in             = in;
         this.out            = out;
         this.companyServer  = companyServer;
-        this.uuid = uuid;
+        this.uuid           = uuid;
     }
 
     public void run() {
@@ -29,18 +29,13 @@ public class CompanyServerWorker implements Runnable
             String clientMessage = "";
             String ret = "";
 
-            while (keepRunning)
-            {
+            while (keepRunning) {
                 // Read the message from Client.java
                 clientMessage = in.readUTF();
-
-                //System.out.println("CompanyserverWorker message: " + this.uuid);
                 // Pass the message to the HomeServer trough companyserver;
                 out.writeUTF(companyServer.connectToHomeServer(this.uuid, clientMessage));
                 out.flush();
                 break;
-                //
-
             }
             // Log of message
             Log.info("CompanyServerWorker: Client with UUID " + this.getClientID() + " disconnecting and cleaning up!");

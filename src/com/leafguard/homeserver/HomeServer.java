@@ -2,7 +2,7 @@ package com.leafguard.homeserver;
 
 import com.leafguard.Log;
 import com.leafguard.leafguard.Arduino;
-import com.leafguard.leafguard.ArduinoInterface;
+//import com.leafguard.leafguard.ArduinoInterface;
 import com.leafguard.leafguard.SerialConnectorMock;
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class HomeServer
      * This is the array with arduinos ho have been instantiated
      * All these connections are ment to be statefull
      */
-    private ArrayList<ArduinoInterface> arduinos = new ArrayList<ArduinoInterface>();
+    //private ArrayList<ArduinoInterface> arduinos = new ArrayList<ArduinoInterface>();
 
     public HomeServer()
     {

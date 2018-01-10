@@ -26,7 +26,8 @@ public class Client
             Socket socket   = new Socket("127.0.0.1", 3101);
             this.in         = new DataInputStream(socket.getInputStream());
             this.out        = new DataOutputStream(socket.getOutputStream());
-
+            // First thing we do, is send the clients id so we know who's connecting.
+            // This is important
             out.writeUTF(this.uuid);
             out.flush();
 

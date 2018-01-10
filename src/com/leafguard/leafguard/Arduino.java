@@ -1,6 +1,6 @@
 package com.leafguard.leafguard;
 
-public class Arduino implements ArduinoInterface
+public class Arduino
 {
     private int id;
     private int pumpState;
@@ -80,8 +80,6 @@ public class Arduino implements ArduinoInterface
             this.serialConnector.sendData("pumpon");
             return "ok";
         }
-
-
 
         this.serialConnector.sendData("pumpoff");
         return "ok";

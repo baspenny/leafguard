@@ -81,15 +81,16 @@ public class ClientGuiController implements Initializable
         this.reInitGui();
     }
 
-    private void getDataFromServer(String message) {
+    private void getDataFromServer(String message)
+    {
+        // Prepare a new client with the uuid
         Client client = new Client(this.uuid);
-        // @todo process the data received from the server into the GUI
-        // ....
-        // ....
+
+        // Send data and receive response
         String response = client.sendMessage(message);
         this.moisture = Integer.parseInt(response);
         this.reInitGui();
-        System.out.println(response + " Ja toch");
+        System.out.println(response);
     }
 
     private void reInitGui()
