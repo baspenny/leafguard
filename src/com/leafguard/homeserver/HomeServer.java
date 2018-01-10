@@ -2,28 +2,34 @@ package com.leafguard.homeserver;
 
 import com.leafguard.Log;
 import com.leafguard.leafguard.Arduino;
-//import com.leafguard.leafguard.ArduinoInterface;
 import com.leafguard.leafguard.SerialConnectorMock;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Set;
+
+/**
+ * HomeServer class
+ *
+ * Handles connections from the network (internet) via multithreading
+ * Handles serial connection between this and Arduino
+ */
 
 public class HomeServer
 {
-
     private ServerSocket serverSocket;
-    private ArrayList<Thread> threads = new ArrayList<>();
+
+    /**
+     * @todo: consideration : Implement system to facilitate more than one LeafGuard system
+     * This is the array with arduinos ho have been instantiated
+     * All these connections are ment to be statefull
+     * private ArrayList<ArduinoInterface> arduinos = new ArrayList<ArduinoInterface>();
+     * For now just one Arduino object
+     */
     public Arduino arduino; // Statefull object
 
     /**
-     * This is the array with arduinos ho have been instantiated
-     * All these connections are ment to be statefull
+     * El constructori!!
      */
-    //private ArrayList<ArduinoInterface> arduinos = new ArrayList<ArduinoInterface>();
-
     public HomeServer()
     {
         this.arduino = new Arduino(new SerialConnectorMock());
@@ -39,6 +45,10 @@ public class HomeServer
         }
     }
 
+    /**
+     * When a incoming connection is detected,
+     * handle it
+     */
     private void handleIncomingConnection()
     {
         Log.info("HomeServer: Listening for Company-server connections...");
@@ -66,11 +76,10 @@ public class HomeServer
         t.start();
     }
 
-
-
-    public void printMessage() {
-        Log.info("This is printmessage in Homeserver invoked by HomeServerWorker");
-    }
+    /**
+     * Runner
+     * @param args
+     */
     public static void main(String[] args) {
         HomeServer homeServer = new HomeServer();
     }

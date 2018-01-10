@@ -4,6 +4,12 @@ import com.leafguard.Log;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * CompanyServerWorker
+ *
+ * A thread class for handling the socket connection
+ * Nothing much to see here.
+ */
 public class CompanyServerWorker implements Runnable
 {
     private Socket              socket;
@@ -13,7 +19,14 @@ public class CompanyServerWorker implements Runnable
     private String              uuid;
     private boolean             keepRunning = true;
 
-
+    /**
+     * Construction of the worker needs:
+     *
+     * @param in
+     * @param out
+     * @param uuid
+     * @param companyServer
+     */
     public CompanyServerWorker(DataInputStream in , DataOutputStream out, String uuid, CompanyServer companyServer)
     {
         this.socket         = socket;
