@@ -39,17 +39,24 @@ public class HomeServerWorker implements Runnable
         try {
             String messageFromCompanyServer = input.readUTF();
             String returnVal = "";
+            // Explode the message from companyserver
+            String[] request = messageFromCompanyServer.split("#");
+            String uuid     = request[0];
+            String message  = request[1];
 
+            if(message.equals("moisture")) {
+                String moisturePercentage = Integer.toString(homeServer.arduino.getMoisturePercentage());
+                returnVal = "succes:" + moisturePercentage;
+            } else if (message.equals("waterplant")) {
+                String ret = homeServer.arduino.controlPump(1);
+                returnVal = "succes:" + ret;
 
-            if(messageFromCompanyServer.equals("moisture")) {
-                returnVal = Integer.toString(homeServer.arduino.getMoisturePercentage());
+            } else {
+                returnVal = "error:unknown command: " + message;
             }
 
-            if(messageFromCompanyServer.equals("waterplant")) {
-                returnVal = homeServer.arduino.controlPump(1);
-            }
 
-            this.output.writeUTF(Integer.toString(homeServer.arduino.getMoisturePercentage()));
+            this.output.writeUTF(returnVal);
            // this.output.writeUTF(returnVal);
             this.output.flush();
             Log.info("HomeServerWorker: disconnecting from CompanyServer and cleaning up!");
