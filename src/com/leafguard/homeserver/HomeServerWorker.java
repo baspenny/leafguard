@@ -40,6 +40,7 @@ public class HomeServerWorker implements Runnable
             String messageFromCompanyServer = input.readUTF();
             String returnVal = "";
 
+
             if(messageFromCompanyServer.equals("moisture")) {
                 returnVal = Integer.toString(homeServer.arduino.getMoisturePercentage());
             }
@@ -49,6 +50,7 @@ public class HomeServerWorker implements Runnable
             }
 
             this.output.writeUTF(Integer.toString(homeServer.arduino.getMoisturePercentage()));
+           // this.output.writeUTF(returnVal);
             this.output.flush();
             Log.info("HomeServerWorker: disconnecting from CompanyServer and cleaning up!");
             // Cleaning up

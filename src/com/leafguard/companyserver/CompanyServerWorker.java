@@ -49,16 +49,6 @@ public class CompanyServerWorker implements Runnable
         }
 
     }
-    private boolean checkIfClientIsAllowed(String uuid)
-    {
-        for (String client: companyServer.getAllowedClients()) {
-            if(client.equals(uuid)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 
 
     public String getClientID() {

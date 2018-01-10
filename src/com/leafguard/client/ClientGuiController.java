@@ -45,7 +45,7 @@ public class ClientGuiController implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.setUuid("df309914-e898-11e7-80c1-9a214cf093af");
+        this.setUuid("df309914-e898-11e7-80c1-9a214cf093ag");
         this.reInitGui();
     }
 
@@ -88,8 +88,8 @@ public class ClientGuiController implements Initializable
 
         // Send data and receive response
         String response = client.sendMessage(message);
-        this.moisture = Integer.parseInt(response);
-        this.reInitGui();
+        //this.moisture = Integer.parseInt(response);
+        //this.reInitGui();
         System.out.println(response);
     }
 

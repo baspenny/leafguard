@@ -14,9 +14,10 @@ import java.util.Enumeration;
 /**
  * Class SerialConnectorMock
  *
- * The purpose of this class is to mock/mimmick an serial connection to a Arduino
+ * The purpose of this class is to mock/mimmick a serial connection to a Arduino
  * This allows us to test more than one Arduino instances because this
- * could be the case in a real world scenario
+ * could be the case in a real world scenario but is out of scope
+ * for this project
  */
 
 public class SerialConnectorMock implements SerialConnectorInterface
