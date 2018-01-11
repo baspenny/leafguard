@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
@@ -35,7 +36,7 @@ public class ClientGuiController implements Initializable
     @FXML
     private Rectangle DashButton2;
     @FXML
-    private Rectangle DashButton3;
+    private StackPane DashButton3;
     @FXML
     private Arc moistureGauge;
     @FXML
@@ -46,6 +47,7 @@ public class ClientGuiController implements Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.setUuid("df309914-e898-11e7-80c1-9a214cf093ag");
+        //this.clickDashButton3();
         this.reInitGui();
     }
 
@@ -59,38 +61,32 @@ public class ClientGuiController implements Initializable
 
     @FXML
     private void clickDashButton1() {
-        Log.info("Method clickDashButton1 invoked");
-
-        this.moisture = 12;
+        this.getDataFromServer("startPump");
         this.reInitGui();
     }
 
     @FXML
     private void clickDashButton2(){
-        Log.info("Method clickDashButton2 invoked");
-
-        this.moisture = 46;
+        this.getDataFromServer("stopPump");
         this.reInitGui();
     }
 
     @FXML
     private void clickDashButton3(){
-        Log.info("Method clickDashButton3 invoked");
+        String message = this.getDataFromServer("getMoistureLevel");
 
-        this.moisture = 89;
+        String[] ff = message.split(":");
+        this.moisture = Integer.parseInt(ff[1]);
         this.reInitGui();
     }
 
-    private void getDataFromServer(String message)
+    private String getDataFromServer(String message)
     {
         // Prepare a new client with the uuid
         Client client = new Client(this.uuid);
-
         // Send data and receive response
-        String response = client.sendMessage(message);
-        //this.moisture = Integer.parseInt(response);
-        //this.reInitGui();
-        System.out.println(response);
+        return client.sendMessage(message);
+
     }
 
     private void reInitGui()

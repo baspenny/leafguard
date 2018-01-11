@@ -32,9 +32,35 @@
       </HBox>
       <HBox GridPane.columnSpan="3" GridPane.rowIndex="1">
          <children>
-            <Rectangle id="DashButton1" fx:id="DashButton1" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="60.0" onMouseClicked="#clickDashButton1" stroke="#cccccc" strokeType="INSIDE" strokeWidth="0.0" width="135.0" />
-            <Rectangle id="DashButton2" fx:id="DashButton2" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="60.0" onMouseClicked="#clickDashButton2" stroke="#cccccc" strokeType="INSIDE" strokeWidth="0.0" width="135.0" />
-            <Rectangle id="DashButton3" fx:id="DashButton3" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="60.0" onMouseClicked="#clickDashButton3" stroke="#cccccc" strokeType="INSIDE" strokeWidth="0.0" width="135.0" />
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Rectangle id="DashButton1" fx:id="DashButton1" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="60.0" onMouseClicked="#clickDashButton1" stroke="#cccccc" strokeType="INSIDE" strokeWidth="0.0" width="135.0" />
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="ZET POMP AAN">
+                     <font>
+                        <Font name="Arial Bold" size="13.0" />
+                     </font>
+                  </Text>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Rectangle id="DashButton2" fx:id="DashButton2" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="60.0" onMouseClicked="#clickDashButton2" stroke="#cccccc" strokeType="INSIDE" strokeWidth="0.0" width="135.0" />
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="ZET POMP UIT">
+                     <font>
+                        <Font name="Arial Bold" size="13.0" />
+                     </font>
+                  </Text>
+               </children>
+            </StackPane>
+            <StackPane id="DashButton3" fx:id="DashButton3" prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="60.0" onMouseClicked="#clickDashButton3" stroke="#cccccc" strokeType="INSIDE" strokeWidth="0.0" width="135.0" />
+                  <Text fill="#a1a1a1" strokeType="OUTSIDE" strokeWidth="0.0" text="STATUS">
+                     <font>
+                        <Font name="Arial Bold" size="13.0" />
+                     </font></Text>
+               </children>
+            </StackPane>
          </children></HBox>
       <HBox id="graphContainer" prefHeight="502.0" prefWidth="405.0" GridPane.columnSpan="3" GridPane.rowIndex="2">
          <padding>

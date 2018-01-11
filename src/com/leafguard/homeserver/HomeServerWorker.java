@@ -51,12 +51,24 @@ public class HomeServerWorker implements Runnable
             // Check wich command to run
             // @todo: Is it realy the responsibility of the thread to do things on the Arduino.?
             // I think not.
-            if(message.equals("moisture")) {
+            String ret = "";
+            if(message.equals("moisture"))
+            {
                 String moisturePercentage = Integer.toString(homeServer.arduino.getMoisturePercentage());
                 returnVal = "succes:" + moisturePercentage;
             } else if (message.equals("waterplant")) {
-                String ret = homeServer.arduino.controlPump(1);
+                ret = homeServer.arduino.controlPump(1);
                 returnVal = "succes:" + ret;
+            } else if (message.equals("stopPump")) {
+                ret = homeServer.arduino.togglePump(0);
+                returnVal = "success:" +ret;
+            } else if (message.equals("startPump")) {
+                ret = homeServer.arduino.togglePump(1);
+                returnVal = "success:" +ret;
+            } else if (message.equals("getMoistureLevel")) {
+                ret = Integer.toString(homeServer.arduino.getMoisturePercentage());
+                returnVal = "success:" +ret;
+
 
             } else {
                 returnVal = "error:unknown command: " + message;

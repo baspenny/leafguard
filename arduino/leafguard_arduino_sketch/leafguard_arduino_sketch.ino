@@ -47,7 +47,7 @@ void loop() {
     if (readString == "data")
     {
       moistureValue = analogRead(sensorPin);
-      moistureValue = map(moistureValue, 686, 1, 0, 100);
+      moistureValue = map(moistureValue, 1024, 530, 0, 100);
       String ret = "moisture=";
       ret.concat(getMoisturePercentage());
       ret.concat("&pumpstate=");
@@ -60,7 +60,7 @@ void loop() {
 }
 int getMoisturePercentage() {
   moistureValue = analogRead(sensorPin);
-  moistureValue = map(moistureValue, 686, 1, 0, 100);
+  moistureValue = map(moistureValue, 1024, 530, 0, 100);
   return moistureValue;
 }
 

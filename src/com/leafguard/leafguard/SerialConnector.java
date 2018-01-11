@@ -14,7 +14,7 @@ public class SerialConnector implements SerialPortEventListener, SerialConnector
     /** The port we're normally going to use. */
     private static final String PORT_NAMES[] = {
             "/dev/cu.usbmodem1D121", // Mac Pro Sebas
-            "/dev/cu.usbmodem1411", // Macbook Pro Sebas
+            "/dev/cu.usbmodem1421", // Macbook Pro Sebas
             "COM3", "COM4",// Windows
     };
     /**

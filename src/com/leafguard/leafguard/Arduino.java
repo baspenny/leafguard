@@ -78,11 +78,11 @@ public class Arduino
     {
         if(state == 1) {
             this.serialConnector.sendData("pumpon");
-            return "ok";
+            return "pump_turned_on";
         }
 
         this.serialConnector.sendData("pumpoff");
-        return "ok";
+        return "pump_turned_off";
     }
 
     /**

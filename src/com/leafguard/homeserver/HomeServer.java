@@ -2,6 +2,7 @@ package com.leafguard.homeserver;
 
 import com.leafguard.Log;
 import com.leafguard.leafguard.Arduino;
+import com.leafguard.leafguard.SerialConnector;
 import com.leafguard.leafguard.SerialConnectorMock;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -32,7 +33,7 @@ public class HomeServer
      */
     public HomeServer()
     {
-        this.arduino = new Arduino(new SerialConnectorMock());
+        this.arduino = new Arduino(new SerialConnector());
 
         try {
             this.serverSocket = new ServerSocket(6201);
