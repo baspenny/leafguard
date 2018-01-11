@@ -14,7 +14,6 @@ public class ArduinoTest {
     SerialConnectorInterface serialConnector = new SerialConnectorMock();
     Arduino arduino = new Arduino(serialConnector);
 
-    // @todo: Huub, kun je er echt vanuit gaan dat de vochigheid -48 is? Het lijkt mij een variabele dus niet op deze manier te testen.
     @Test
     public void getMoisturePercentage() {
         serialConnector.initialize();
@@ -30,7 +29,7 @@ public class ArduinoTest {
         serialConnector.initialize();
         int pumpState = 1; // input
 
-        String expect = "ok";
+        String expect = "pump_turned_on";
         String actual = arduino.controlPump(pumpState);
         assertEquals(expect, actual);
         serialConnector.close();
@@ -39,7 +38,7 @@ public class ArduinoTest {
     @Test
     public void togglePump() {
         int state = 1;
-        String expect = "ok";
+        String expect = "pump_turned_on";
         String actual = arduino.togglePump(state);
         assertEquals(expect, actual);
         serialConnector.close();
