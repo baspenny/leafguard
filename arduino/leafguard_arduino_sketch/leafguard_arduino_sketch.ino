@@ -2,14 +2,14 @@ int sensorPin           = A3;
 int greenLed            = 11;
 int yellowLed           = 10;
 int redLed              = 9;
-int relaisSwitch        = 3;
+int pump                = 3;
 int moistureValue       = 0;
 
 String readString;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(relaisSwitch, OUTPUT);
+  pinMode(pump, OUTPUT);
   pinMode(greenLed, OUTPUT);
   pinMode(yellowLed, OUTPUT);
   pinMode(redLed, OUTPUT);
@@ -30,22 +30,22 @@ void loop() {
     {            
       while (plantNeedWater()) {
 
-        digitalWrite(relaisSwitch, HIGH);
+        digitalWrite(pump, HIGH);
         digitalWrite(greenLed, HIGH);
         digitalWrite(redLed, LOW);
 
         Serial.println("switching on");
-        // TODO switch real pomp
+        
       } 
       Serial.println("No water needed");
-        digitalWrite(relaisSwitch, LOW);
+        digitalWrite(pump, LOW);
         digitalWrite(greenLed, LOW);
         digitalWrite(redLed, HIGH);
     }
 
     if (readString == "pumpoff")
     {
-      digitalWrite(relaisSwitch, LOW);
+      digitalWrite(pump, LOW);
       digitalWrite(redLed, HIGH);
       digitalWrite(greenLed, LOW);      
       Serial.println("switching off");
@@ -54,11 +54,11 @@ void loop() {
     if (readString == "data")
     {
       moistureValue = analogRead(sensorPin);
-      moistureValue = map(moistureValue, 1024, 530, 0, 100);
+      moistureValue = map(moistureValue, 550,0,0,100);
       String ret = "moisture=";
       ret.concat(getMoisturePercentage());
       ret.concat("&pumpstate=");
-      ret.concat(digitalRead(relaisSwitch));
+      ret.concat(digitalRead(pump));
 
       Serial.println(ret);
     }
@@ -68,6 +68,10 @@ void loop() {
 int getMoisturePercentage() {
   moistureValue = analogRead(sensorPin);
   moistureValue = map(moistureValue, 1024, 530, 0, 100);
+  if (moistureValue > 100)
+  {
+    return moistureValue = 100;
+  }
   return moistureValue;
 }
 

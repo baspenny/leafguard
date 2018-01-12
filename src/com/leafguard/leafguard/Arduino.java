@@ -151,5 +151,6 @@ public class Arduino
     public boolean closeConnection() {
         return false;
     }
+
 }
 

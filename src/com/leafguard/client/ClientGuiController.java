@@ -53,30 +53,27 @@ public class ClientGuiController implements Initializable
 
     @FXML
     private void giveWater() {
-        this.moisture = 89;
+//        this.moisture = 89;
         this.getDataFromServer("waterplant");
         this.reInitGui();
-
     }
 
     @FXML
-    private void clickDashButton1() {
-        this.getDataFromServer("startPump");
+    private void buttonStartPump() {
+        System.out.println(this.getDataFromServer("startPump"));
         this.reInitGui();
     }
 
     @FXML
-    private void clickDashButton2(){
+    private void buttonStopPump(){
         this.getDataFromServer("stopPump");
         this.reInitGui();
     }
 
     @FXML
-    private void clickDashButton3(){
-        String message = this.getDataFromServer("getMoistureLevel");
-
-        String[] ff = message.split(":");
-        this.moisture = Integer.parseInt(ff[1]);
+    private void buttonGetStatus()
+    {
+        this.moisture = parseArduinoString(this.getDataFromServer("getMoistureLevel"));
         this.reInitGui();
     }
 
@@ -86,13 +83,17 @@ public class ClientGuiController implements Initializable
         Client client = new Client(this.uuid);
         // Send data and receive response
         return client.sendMessage(message);
+    }
 
+    private int parseArduinoString(String message)
+    {
+        String[] ret = message.split(":");
+        return this.moisture = Integer.parseInt(ret[1]);
     }
 
     private void reInitGui()
     {
         int moisture = this.moisture;
-
 
         // For now, the levels are low, neutral and high
         String level = "";
@@ -103,11 +104,9 @@ public class ClientGuiController implements Initializable
         } else {
             level = "high";
         }
-
         this.setGauge(moisture);
         this.setGaugeColor(level);
         this.setPlantEmotion(level);
-
     }
 
     private void setGauge(int moisture) {
