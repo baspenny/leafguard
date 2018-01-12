@@ -18,7 +18,6 @@ void setup() {
 }
 
 void loop() {
-
   while (Serial.available()) {
     delay(3);
     char c = Serial.read();
@@ -26,21 +25,29 @@ void loop() {
   }
   readString.trim();
   if (readString.length() > 0) {
-    if (readString == "pumpon")
-    {
-      digitalWrite(relaisSwitch, HIGH);
-      digitalWrite(greenLed, HIGH);
-      digitalWrite(redLed, LOW);
 
-      Serial.println("switching on");
+    if (readString == "pumpon")
+    {            
+      while (plantNeedWater()) {
+
+        digitalWrite(relaisSwitch, HIGH);
+        digitalWrite(greenLed, HIGH);
+        digitalWrite(redLed, LOW);
+
+        Serial.println("switching on");
+        // TODO switch real pomp
+      } 
+      Serial.println("No water needed");
+        digitalWrite(relaisSwitch, LOW);
+        digitalWrite(greenLed, LOW);
+        digitalWrite(redLed, HIGH);
     }
 
     if (readString == "pumpoff")
     {
       digitalWrite(relaisSwitch, LOW);
       digitalWrite(redLed, HIGH);
-      digitalWrite(greenLed, LOW);
-
+      digitalWrite(greenLed, LOW);      
       Serial.println("switching off");
     }
 
@@ -64,16 +71,9 @@ int getMoisturePercentage() {
   return moistureValue;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+boolean plantNeedWater() {
+  if (getMoisturePercentage() < 50) {
+    return true;
+  }
+  return false;
+}
