@@ -32,11 +32,11 @@ public class ClientGuiController implements Initializable
     @FXML
     private Circle waterButton;
     @FXML
-    private Rectangle DashButton1;
+    private Rectangle buttonStartPump;
     @FXML
-    private Rectangle DashButton2;
+    private Rectangle buttonStopPump;
     @FXML
-    private StackPane DashButton3;
+    private StackPane buttonGetStatus;
     @FXML
     private Arc moistureGauge;
     @FXML
@@ -61,6 +61,7 @@ public class ClientGuiController implements Initializable
     @FXML
     private void buttonStartPump() {
         System.out.println(this.getDataFromServer("startPump"));
+        this.moisture = (parseArduinoString(this.getDataFromServer("getMoistureLevel")) /2);
         this.reInitGui();
     }
 
@@ -73,7 +74,7 @@ public class ClientGuiController implements Initializable
     @FXML
     private void buttonGetStatus()
     {
-        this.moisture = parseArduinoString(this.getDataFromServer("getMoistureLevel"));
+        this.moisture = (parseArduinoString(this.getDataFromServer("getMoistureLevel")) /2);
         this.reInitGui();
     }
 
