@@ -61,7 +61,7 @@ public class ClientGuiController implements Initializable
     @FXML
     private void buttonStartPump() {
         System.out.println(this.getDataFromServer("startPump"));
-        this.moisture = (parseArduinoString(this.getDataFromServer("getMoistureLevel")) /2);
+        this.moisture = (parseArduinoString(this.getDataFromServer("getMoistureLevel")));
         this.reInitGui();
     }
 
@@ -74,7 +74,7 @@ public class ClientGuiController implements Initializable
     @FXML
     private void buttonGetStatus()
     {
-        this.moisture = (parseArduinoString(this.getDataFromServer("getMoistureLevel")) /2);
+        this.moisture = (parseArduinoString(this.getDataFromServer("getMoistureLevel")));
         this.reInitGui();
     }
 
